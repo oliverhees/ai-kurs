@@ -491,14 +491,179 @@
         <div class="content-wrapper">
             <!-- Navigation -->
             <div class="playground-nav">
-                <button class="nav-button active" onclick="showSection('json')">📊 JSON-Validator</button>
+                <button class="nav-button active" onclick="showSection('learn')">🎓 JSON verstehen</button>
+                <button class="nav-button" onclick="showSection('json')">📊 JSON-Validator</button>
                 <button class="nav-button" onclick="showSection('api')">🌐 API-Tester</button>
                 <button class="nav-button" onclick="showSection('status')">🔍 Status-Codes</button>
                 <button class="nav-button" onclick="showSection('examples')">📚 Live-Beispiele</button>
             </div>
 
+            <!-- JSON Lernen Section -->
+            <div id="learn-section" class="playground-section active">
+                <div class="section-card">
+                    <h2 class="section-title">🎓 JSON verstehen lernen</h2>
+                    
+                    <!-- JSON Einführung -->
+                    <div style="margin-bottom: 3rem;">
+                        <h3 style="color: #667eea; font-size: 1.8rem; margin-bottom: 1rem;">📊 JSON - Wie ein Adressbuch mit Struktur</h3>
+                        <p style="color: rgba(255, 255, 255, 0.9); font-size: 1.1rem; line-height: 1.6; margin-bottom: 1rem;">
+                            JSON ist überall! Jede moderne Website, jede App nutzt JSON um Daten zu übertragen. Das Coole: Es ist eigentlich ganz einfach zu verstehen.
+                        </p>
+                        
+                        <div class="highlight-box">
+                            <p><strong>💡 Einfacher Vergleich:</strong> JSON ist wie ein Adressbuch. Jeder Eintrag hat die gleiche Struktur - Name, Telefon, Email. So können Computer die Daten verstehen.</p>
+                        </div>
+                        
+                        <!-- JSON Grundlagen -->
+                        <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 15px; padding: 2rem; margin: 2rem 0;">
+                            <h4 style="color: #f093fb; font-size: 1.4rem; margin-bottom: 1.5rem; text-align: center;">🎯 So liest du JSON wie ein Profi:</h4>
+                            
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+                                <div style="background: rgba(102, 126, 234, 0.1); border: 1px solid rgba(102, 126, 234, 0.3); border-radius: 12px; padding: 1.5rem;">
+                                    <h5 style="color: #667eea; font-size: 1.2rem; margin-bottom: 1rem;">🗂️ Objekte - Container für Daten</h5>
+                                    <div style="background: #1a1a2e; border-radius: 8px; padding: 1rem; margin: 1rem 0; font-family: monospace; font-size: 0.9rem;">
+{<br>
+  <span style="color: #f093fb;">"name"</span>: <span style="color: #4ecdc4;">"Max"</span>,<br>
+  <span style="color: #f093fb;">"alter"</span>: <span style="color: #ffa726;">30</span><br>
+}
+                                    </div>
+                                    <p style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem;">
+                                        <strong>{ }</strong> = Ein Container (wie ein Ordner)<br>
+                                        Sammelt zusammengehörige Informationen
+                                    </p>
+                                </div>
+                                
+                                <div style="background: rgba(78, 205, 196, 0.1); border: 1px solid rgba(78, 205, 196, 0.3); border-radius: 12px; padding: 1.5rem;">
+                                    <h5 style="color: #4ecdc4; font-size: 1.2rem; margin-bottom: 1rem;">📋 Arrays - Listen von Dingen</h5>
+                                    <div style="background: #1a1a2e; border-radius: 8px; padding: 1rem; margin: 1rem 0; font-family: monospace; font-size: 0.9rem;">
+[<br>
+  <span style="color: #4ecdc4;">"JavaScript"</span>,<br>
+  <span style="color: #4ecdc4;">"Python"</span>,<br>
+  <span style="color: #4ecdc4;">"APIs"</span><br>
+]
+                                    </div>
+                                    <p style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem;">
+                                        <strong>[ ]</strong> = Eine Liste (mehrere Dinge)<br>
+                                        Wie eine Einkaufsliste oder To-Do-Liste
+                                    </p>
+                                </div>
+                                
+                                <div style="background: rgba(255, 147, 251, 0.1); border: 1px solid rgba(255, 147, 251, 0.3); border-radius: 12px; padding: 1.5rem;">
+                                    <h5 style="color: #f093fb; font-size: 1.2rem; margin-bottom: 1rem;">🔑 Key-Value Paare</h5>
+                                    <div style="background: #1a1a2e; border-radius: 8px; padding: 1rem; margin: 1rem 0; font-family: monospace; font-size: 0.9rem;">
+<span style="color: #f093fb;">"name"</span>: <span style="color: #4ecdc4;">"Max Mustermann"</span>
+                                    </div>
+                                    <p style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem;">
+                                        <strong>"schlüssel": "wert"</strong><br>
+                                        Wie Name im Adressbuch: eindeutig zuordenbar
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Datentypen -->
+                        <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 15px; padding: 2rem; margin: 2rem 0;">
+                            <h4 style="color: #ffa726; font-size: 1.4rem; margin-bottom: 1.5rem; text-align: center;">🎭 JSON Datentypen - Das kannst du speichern:</h4>
+                            
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                                <div style="text-align: center; padding: 1rem; background: rgba(255, 255, 255, 0.05); border-radius: 10px;">
+                                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">📝</div>
+                                    <h6 style="color: #4ecdc4; margin-bottom: 0.5rem;">String (Text)</h6>
+                                    <code style="background: #1a1a2e; padding: 0.3rem; border-radius: 4px; color: #4ecdc4;">"Hallo Welt"</code>
+                                </div>
+                                
+                                <div style="text-align: center; padding: 1rem; background: rgba(255, 255, 255, 0.05); border-radius: 10px;">
+                                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🔢</div>
+                                    <h6 style="color: #ffa726; margin-bottom: 0.5rem;">Number (Zahl)</h6>
+                                    <code style="background: #1a1a2e; padding: 0.3rem; border-radius: 4px; color: #ffa726;">42</code> <code style="background: #1a1a2e; padding: 0.3rem; border-radius: 4px; color: #ffa726;">3.14</code>
+                                </div>
+                                
+                                <div style="text-align: center; padding: 1rem; background: rgba(255, 255, 255, 0.05); border-radius: 10px;">
+                                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">✅</div>
+                                    <h6 style="color: #56ab2f; margin-bottom: 0.5rem;">Boolean (Ja/Nein)</h6>
+                                    <code style="background: #1a1a2e; padding: 0.3rem; border-radius: 4px; color: #56ab2f;">true</code> <code style="background: #1a1a2e; padding: 0.3rem; border-radius: 4px; color: #56ab2f;">false</code>
+                                </div>
+                                
+                                <div style="text-align: center; padding: 1rem; background: rgba(255, 255, 255, 0.05); border-radius: 10px;">
+                                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🚫</div>
+                                    <h6 style="color: #ff6b6b; margin-bottom: 0.5rem;">Null (Leer)</h6>
+                                    <code style="background: #1a1a2e; padding: 0.3rem; border-radius: 4px; color: #ff6b6b;">null</code>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Praktisches Beispiel -->
+                        <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 15px; padding: 2rem; margin: 2rem 0;">
+                            <h4 style="color: #667eea; font-size: 1.4rem; margin-bottom: 1rem; text-align: center;">🏢 Komplettes Beispiel - So sieht echtes JSON aus:</h4>
+                            <p style="color: rgba(255, 255, 255, 0.8); text-align: center; margin-bottom: 1.5rem;">Eine Kundendatenbank für ein Automatisierungsprojekt:</p>
+                            
+                            <div style="background: #1a1a2e; border-radius: 12px; padding: 1.5rem; font-family: monospace; font-size: 0.9rem; line-height: 1.5; overflow-x: auto;">
+{<br>
+  <span style="color: #f093fb;">"kunde"</span>: {<br>
+    <span style="color: #f093fb;">"id"</span>: <span style="color: #ffa726;">12345</span>,<br>
+    <span style="color: #f093fb;">"name"</span>: <span style="color: #4ecdc4;">"TechStart GmbH"</span>,<br>
+    <span style="color: #f093fb;">"isActive"</span>: <span style="color: #56ab2f;">true</span>,<br>
+    <span style="color: #f093fb;">"kontakte"</span>: [<br>
+      {<br>
+        <span style="color: #f093fb;">"name"</span>: <span style="color: #4ecdc4;">"Max Müller"</span>,<br>
+        <span style="color: #f093fb;">"role"</span>: <span style="color: #4ecdc4;">"CTO"</span>,<br>
+        <span style="color: #f093fb;">"email"</span>: <span style="color: #4ecdc4;">"max@techstart.de"</span><br>
+      },<br>
+      {<br>
+        <span style="color: #f093fb;">"name"</span>: <span style="color: #4ecdc4;">"Anna Schmidt"</span>,<br>
+        <span style="color: #f093fb;">"role"</span>: <span style="color: #4ecdc4;">"CEO"</span>,<br>
+        <span style="color: #f093fb;">"email"</span>: <span style="color: #4ecdc4;">"anna@techstart.de"</span><br>
+      }<br>
+    ],<br>
+    <span style="color: #f093fb;">"projekt"</span>: {<br>
+      <span style="color: #f093fb;">"budget"</span>: <span style="color: #ffa726;">75000</span>,<br>
+      <span style="color: #f093fb;">"deadline"</span>: <span style="color: #4ecdc4;">"2024-12-31"</span>,<br>
+      <span style="color: #f093fb;">"features"</span>: [<span style="color: #4ecdc4;">"API Integration"</span>, <span style="color: #4ecdc4;">"Automation"</span>, <span style="color: #4ecdc4;">"KI-Chat"</span>]<br>
+    },<br>
+    <span style="color: #f093fb;">"lastUpdate"</span>: <span style="color: #ff6b6b;">null</span><br>
+  }<br>
+}
+                            </div>
+                            
+                            <div style="margin-top: 1.5rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                                <div style="background: rgba(102, 126, 234, 0.1); border-radius: 8px; padding: 1rem;">
+                                    <strong style="color: #667eea;">📊 So liest du das:</strong><br>
+                                    <span style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem;">
+                                        • Haupt-Objekt "kunde" mit allen Infos<br>
+                                        • Array "kontakte" mit 2 Personen<br>
+                                        • Verschachteltes "projekt" Objekt<br>
+                                        • Verschiedene Datentypen gemischt
+                                    </span>
+                                </div>
+                                
+                                <div style="background: rgba(78, 205, 196, 0.1); border-radius: 8px; padding: 1rem;">
+                                    <strong style="color: #4ecdc4;">🎯 Praktische Nutzung:</strong><br>
+                                    <span style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem;">
+                                        • CRM-Integration<br>
+                                        • Automatische E-Mails<br>
+                                        • Projekt-Tracking<br>
+                                        • Lead-Bewertung
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Call-to-Action zum Validator -->
+                        <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: rgba(102, 126, 234, 0.1); border: 1px solid rgba(102, 126, 234, 0.3); border-radius: 15px;">
+                            <h4 style="color: #667eea; font-size: 1.5rem; margin-bottom: 1rem;">🚀 Bereit zum Ausprobieren?</h4>
+                            <p style="color: rgba(255, 255, 255, 0.9); margin-bottom: 1.5rem;">
+                                Du verstehst jetzt die JSON-Grundlagen! Zeit, selbst Hand anzulegen und eigene JSON-Strukturen zu testen.
+                            </p>
+                            <button class="action-button success-button" onclick="showSection('json')" style="font-size: 1.1rem; padding: 1rem 2rem;">
+                                📊 Zum JSON-Validator wechseln
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- JSON Validator Section -->
-            <div id="json-section" class="playground-section active">
+            <div id="json-section" class="playground-section">
                 <div class="section-card">
                     <h2 class="section-title">📊 JSON-Validator & Formatter</h2>
                     
