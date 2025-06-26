@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modul 2 - Teil 1: N8N Basics - Cloud vs. Self-Hosted</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0a0a0a;
+            color: white;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .premium-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .premium-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .video-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .module-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .video-title {
+            font-size: clamp(3rem, 8vw, 4.5rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+
+        .video-subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.6rem);
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 3rem;
+        }
+
+
+
+        .video-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .stat-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .stat-box:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .content-card {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .content-card:hover {
+            background: rgba(255, 255, 255, 0.98);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-5px);
+        }
+
+        .section-title {
+            color: #2c3e50 !important;
+            font-weight: 800 !important;
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .body-text {
+            color: #34495e !important;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .comparison-battle {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .battle-title {
+            color: #fff !important;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .vs-divider {
+            font-size: 3rem;
+            color: #f093fb;
+            font-weight: 800;
+            margin: 30px 0;
+            text-shadow: 0 0 20px rgba(240, 147, 251, 0.8);
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin: 40px 0;
+        }
+
+        .option-card {
+            background: rgba(255,255,255,0.95);
+            color: #2c3e50;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: left;
+            transition: all 0.3s ease;
+        }
+
+        .option-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+        }
+
+        .cloud-card {
+            border-left: 6px solid #4ecdc4;
+        }
+
+        .selfhosted-card {
+            border-left: 6px solid #f093fb;
+        }
+
+        .option-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .option-icon {
+            font-size: 3rem;
+            margin-right: 20px;
+        }
+
+        .option-title {
+            color: #2c3e50 !important;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .option-subtitle {
+            color: #7f8c8d;
+            font-size: 1rem;
+            margin-top: 5px;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        .feature-list li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 2rem;
+            color: #34495e !important;
+        }
+
+        .feature-list.pros li::before {
+            content: '✅';
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+
+        .feature-list.cons li::before {
+            content: '❌';
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+
+        .price-box {
+            background: #f8f9fa;
+            border: 2px solid #667eea;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .price-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .price-label {
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .interactive-challenge {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .challenge-title {
+            color: #fff !important;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .decision-matrix {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .scenario-card {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+        }
+
+        .scenario-card:hover {
+            background: rgba(255, 255, 255, 0.98);
+            border-color: #667eea;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+
+        .scenario-title {
+            color: #2c3e50 !important;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .recommendation {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .rec-cloud {
+            background: rgba(102, 126, 234, 0.2);
+            color: #667eea;
+        }
+
+        .rec-selfhosted {
+            background: rgba(240, 147, 251, 0.2);
+            color: #f093fb;
+        }
+
+        .business-impact {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin: 60px 0;
+        }
+
+        .impact-card {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .impact-card:hover {
+            background: rgba(255, 255, 255, 0.98);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-5px);
+        }
+
+        .service-provider { border-left: 4px solid #667eea; }
+        .business-owner { border-left: 4px solid #f093fb; }
+
+        .impact-title {
+            color: #2c3e50 !important;
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .benefit-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .benefit-list li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 2rem;
+            color: #34495e !important;
+        }
+
+        .benefit-list li::before {
+            content: '💡';
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+
+        .highlight-box {
+            background: #f8f9fa;
+            border: 2px solid #667eea;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .highlight-box p {
+            color: #2c3e50 !important;
+            margin-bottom: 0.5rem;
+        }
+
+        .setup-difficulty {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .difficulty-meter {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .meter-title {
+            color: #2c3e50 !important;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .meter-bar {
+            width: 100%;
+            height: 12px;
+            background: #ecf0f1;
+            border-radius: 6px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .meter-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        .easy { 
+            width: 20%; 
+            background: linear-gradient(90deg, #27ae60, #2ecc71);
+        }
+
+        .hard { 
+            width: 85%; 
+            background: linear-gradient(90deg, #e74c3c, #c0392b);
+        }
+
+        .next-steps {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .next-title {
+            color: #2c3e50 !important;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .content-wrapper {
+                padding: 2rem 1rem;
+            }
+            
+            .video-title {
+                font-size: 2.5rem;
+            }
+            
+            .video-stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+            
+            .decision-matrix {
+                grid-template-columns: 1fr;
+            }
+            
+            .business-impact {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="premium-container">
+        <div class="content-wrapper">
+            <div class="video-header">
+                <div class="module-badge">⚙️ MODUL 2 - TEIL 1</div>
+                <h1 class="video-title">N8N Basics - Cloud vs. Self-Hosted</h1>
+                <p class="video-subtitle">Die richtige Setup-Option für dein Business - verständlich erklärt</p>
+                
+
+            </div>
+
+            <div class="video-stats">
+                <div class="stat-box">
+                    <div class="stat-number">⏱️ 15</div>
+                    <div class="stat-label">Minuten Video</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">💰 90%</div>
+                    <div class="stat-label">Kosten sparen</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">🎯 100%</div>
+                    <div class="stat-label">Richtige Wahl</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">🚀 5min</div>
+                    <div class="stat-label">Setup-Zeit</div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2 class="section-title">🤔 N8N - Was ist das überhaupt?</h2>
+                <p class="body-text">N8N ist dein <strong>visueller Workflow-Builder</strong> - wie ein Lego-Baukasten für Automatisierungen! Du verbindest verschiedene Apps und Dienste mit simplen Drag & Drop, ohne eine Zeile Code zu schreiben.</p>
+                
+                <div class="highlight-box">
+                    <p><strong>💡 Stell dir vor:</strong> Du willst automatisch eine Slack-Nachricht senden, wenn eine neue E-Mail ankommt. Mit N8N ziehst du einfach Gmail und Slack auf eine Arbeitsfläche, verbindest sie mit einem Pfeil - fertig!</p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 30px 0;">
+                    <div style="text-align: center; padding: 20px; background: rgba(255, 255, 255, 0.95); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 16px;">
+                        <span style="font-size: 2.5rem; display: block; margin-bottom: 10px;">🔗</span>
+                        <h4 style="color: #667eea; margin-bottom: 10px;">400+ Integrationen</h4>
+                        <p style="color: #34495e; font-size: 0.9rem;">Gmail, Slack, Notion, ChatGPT, WhatsApp und viele mehr</p>
+                    </div>
+                    
+                    <div style="text-align: center; padding: 20px; background: rgba(255, 255, 255, 0.95); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 16px;">
+                        <span style="font-size: 2.5rem; display: block; margin-bottom: 10px;">🎨</span>
+                        <h4 style="color: #667eea; margin-bottom: 10px;">Visual & Einfach</h4>
+                        <p style="color: #34495e; font-size: 0.9rem;">Drag & Drop Interface - kein Coding nötig</p>
+                    </div>
+                    
+                    <div style="text-align: center; padding: 20px; background: rgba(255, 255, 255, 0.95); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 16px;">
+                        <span style="font-size: 2.5rem; display: block; margin-bottom: 10px;">🔓</span>
+                        <h4 style="color: #667eea; margin-bottom: 10px;">Open Source</h4>
+                        <p style="color: #34495e; font-size: 0.9rem;">Kostenlos nutzbar und komplett transparent</p>
+                    </div>
+                </div>
+                
+                <p class="body-text">Aber jetzt kommt die wichtige Entscheidung: <strong>Wo lässt du N8N laufen?</strong> Das ist wie die Frage: Kaufst du oder mietest du ein Auto? Beide haben Vor- und Nachteile!</p>
+            </div>
+
+            <div class="comparison-battle">
+                <h2 class="battle-title">🥊 N8N Setup Battle Royale</h2>
+                <p style="color: #fff; font-size: 1.2rem; margin-bottom: 30px;">3 Optionen im direkten Vergleich - finde deine perfekte Lösung!</p>
+                
+                <div style="display: flex; justify-content: center; align-items: center; gap: 30px; margin: 30px 0;">
+                    <span style="color: #4ecdc4; font-size: 1.5rem; font-weight: 700;">Cloud</span>
+                    <span class="vs-divider" style="font-size: 2rem; margin: 0;">VS</span>
+                    <span style="color: #f093fb; font-size: 1.5rem; font-weight: 700;">Hostinger</span>
+                    <span class="vs-divider" style="font-size: 2rem; margin: 0;">VS</span>
+                    <span style="color: #ff6b6b; font-size: 1.5rem; font-weight: 700;">Self-Hosted</span>
+                </div>
+                
+                <div style="text-align: center; margin-top: 30px;">
+                    <p style="color: #fff; font-size: 1.1rem;">
+                        🎯 <strong>3 Setup-Optionen im direkten Vergleich</strong><br>
+                        Finde die perfekte Lösung für dein Business
+                    </p>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; margin: 40px 0;">
+                <div class="option-card cloud-card">
+                    <div class="option-header">
+                        <span class="option-icon">☁️</span>
+                        <div>
+                            <h3 class="option-title">N8N Cloud</h3>
+                            <p class="option-subtitle">Maximaler Komfort & Support</p>
+                        </div>
+                    </div>
+                    
+                    <div class="price-box">
+                        <div class="price-number">€20</div>
+                        <div class="price-label">pro Monat (Starter Plan)</div>
+                    </div>
+                    
+                    <h4 style="color: #27ae60; font-size: 1.2rem; margin: 20px 0 10px 0;">✅ Vorteile:</h4>
+                    <ul class="feature-list pros">
+                        <li><strong>5 Minuten Setup:</strong> Account erstellen, fertig!</li>
+                        <li><strong>Zero Maintenance:</strong> Updates, Backups automatisch</li>
+                        <li><strong>Priority Support:</strong> Direkter Support vom N8N-Team</li>
+                        <li><strong>EU-Datenschutz:</strong> Server in Frankfurt</li>
+                        <li><strong>Profi-Features:</strong> Projects, Teams, Environments</li>
+                    </ul>
+                    
+                    <h4 style="color: #e74c3c; font-size: 1.2rem; margin: 20px 0 10px 0;">❌ Nachteile:</h4>
+                    <ul class="feature-list cons">
+                        <li><strong>Teuer:</strong> €240-600/Jahr je nach Plan</li>
+                        <li><strong>Workflow-Limits:</strong> 5-15 aktive Workflows</li>
+                        <li><strong>Execution-Limits:</strong> 2.500-10.000/Monat</li>
+                        <li><strong>Keine npm-Packages:</strong> Limitierte Code-Flexibilität</li>
+                    </ul>
+                    
+                    <div style="background: rgba(78, 205, 196, 0.1); padding: 15px; border-radius: 8px; margin-top: 20px;">
+                        <p style="color: #16a085; font-weight: 600; margin: 0;">🎯 Perfekt für: Einsteiger, Teams, maximalen Komfort</p>
+                    </div>
+                </div>
+
+                <div class="option-card" style="border-left: 6px solid #f093fb; position: relative;">
+                    <div style="position: absolute; top: -10px; right: 10px; background: #f093fb; color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">EMPFEHLUNG</div>
+                    <div class="option-header">
+                        <span class="option-icon">🚀</span>
+                        <div>
+                            <h3 class="option-title">Hostinger Managed</h3>
+                            <p class="option-subtitle">Bestes Preis-Leistungs-Verhältnis</p>
+                        </div>
+                    </div>
+                    
+                    <div class="price-box" style="border-color: #f093fb;">
+                        <div class="price-number" style="color: #f093fb;">€6,99</div>
+                        <div class="price-label">pro Monat (über Olli's Link)</div>
+                    </div>
+                    
+                    <h4 style="color: #27ae60; font-size: 1.2rem; margin: 20px 0 10px 0;">✅ Vorteile:</h4>
+                    <ul class="feature-list pros">
+                        <li><strong>Managed Docker:</strong> Einfaches 1-Click-Setup</li>
+                        <li><strong>Keine Limits:</strong> Unbegrenzte Workflows & Executions</li>
+                        <li><strong>EU-Datenschutz:</strong> DSGVO-konforme Server in Europa</li>
+                        <li><strong>npm-Support:</strong> Alle JavaScript-Libraries nutzbar</li>
+                        <li><strong>Super günstig:</strong> Nur €84/Jahr statt €240+</li>
+                        <li><strong>SSL & Backups:</strong> Automatisch konfiguriert</li>
+                        <li><strong>Performance:</strong> SSD-Storage & gute Speed</li>
+                    </ul>
+                    
+                    <h4 style="color: #e74c3c; font-size: 1.2rem; margin: 20px 0 10px 0;">❌ Nachteile:</h4>
+                    <ul class="feature-list cons">
+                        <li><strong>Kein N8N-Support:</strong> Community-Support nur</li>
+                        <li><strong>Weniger Komfort:</strong> Keine Projects/Teams-Features</li>
+                        <li><strong>Basic-Interface:</strong> Einfacheres Management</li>
+                    </ul>
+                    
+                    <div style="background: rgba(240, 147, 251, 0.1); padding: 15px; border-radius: 8px; margin-top: 20px;">
+                        <p style="color: #8e44ad; font-weight: 600; margin: 0;">🎯 Perfekt für: Fortgeschrittene, Business-User, Kostenoptimierung</p>
+                    </div>
+                </div>
+
+                <div class="option-card" style="border-left: 6px solid #ff6b6b;">
+                    <div class="option-header">
+                        <span class="option-icon">🏠</span>
+                        <div>
+                            <h3 class="option-title">Self-Hosted VPS</h3>
+                            <p class="option-subtitle">Maximum Control & Flexibilität</p>
+                        </div>
+                    </div>
+                    
+                    <div class="price-box" style="border-color: #ff6b6b;">
+                        <div class="price-number" style="color: #ff6b6b;">€5-10</div>
+                        <div class="price-label">pro Monat (Server-Kosten)</div>
+                    </div>
+                    
+                    <h4 style="color: #27ae60; font-size: 1.2rem; margin: 20px 0 10px 0;">✅ Vorteile:</h4>
+                    <ul class="feature-list pros">
+                        <li><strong>Maximale Kontrolle:</strong> Alles selbst konfigurierbar</li>
+                        <li><strong>Günstigste Option:</strong> Nur Server-Kosten</li>
+                        <li><strong>Unlimited Power:</strong> Beliebige Ressourcen</li>
+                        <li><strong>Python & npm:</strong> Komplette Code-Flexibilität</li>
+                        <li><strong>Data Sovereignty:</strong> 100% Datenkontrolle</li>
+                        <li><strong>Custom Configs:</strong> Spezielle Anpassungen möglich</li>
+                    </ul>
+                    
+                    <h4 style="color: #e74c3c; font-size: 1.2rem; margin: 20px 0 10px 0;">❌ Nachteile:</h4>
+                    <ul class="feature-list cons">
+                        <li><strong>Aufwand:</strong> Docker, SSL, Nginx selbst konfigurieren</li>
+                        <li><strong>Wartung:</strong> Updates, Monitoring, Backups selbst</li>
+                        <li><strong>Know-how:</strong> Linux/Docker-Kenntnisse nötig</li>
+                        <li><strong>Risiko:</strong> Bei Fehlern läuft nichts</li>
+                    </ul>
+                    
+                    <div style="background: rgba(255, 107, 107, 0.1); padding: 15px; border-radius: 8px; margin-top: 20px;">
+                        <p style="color: #c0392b; font-weight: 600; margin: 0;">🎯 Perfekt für: Tech-Experten, Enterprises, maximale Kontrolle</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 30px 0;">
+                <div class="difficulty-meter">
+                    <h3 class="meter-title">☁️ N8N Cloud</h3>
+                    <div class="meter-bar">
+                        <div class="meter-fill easy"></div>
+                    </div>
+                    <p style="color: #27ae60; font-weight: 600;">Super einfach (10% Aufwand)</p>
+                    <p style="color: #34495e; margin-top: 10px; font-size: 0.9rem;">Account → E-Mail → Fertig!</p>
+                </div>
+                
+                <div class="difficulty-meter">
+                    <h3 class="meter-title">🚀 Hostinger</h3>
+                    <div class="meter-bar">
+                        <div class="meter-fill" style="width: 35%; background: linear-gradient(90deg, #f093fb, #667eea);"></div>
+                    </div>
+                    <p style="color: #8e44ad; font-weight: 600;">Einfach (35% Aufwand)</p>
+                    <p style="color: #34495e; margin-top: 10px; font-size: 0.9rem;">Account → 1-Click-Deploy → Konfiguration</p>
+                </div>
+                
+                <div class="difficulty-meter">
+                    <h3 class="meter-title">🏠 Self-Hosted VPS</h3>
+                    <div class="meter-bar">
+                        <div class="meter-fill hard"></div>
+                    </div>
+                    <p style="color: #e74c3c; font-weight: 600;">Anspruchsvoll (85% Aufwand)</p>
+                    <p style="color: #34495e; margin-top: 10px; font-size: 0.9rem;">Server → Docker → SSL → Monitoring</p>
+                </div>
+            </div>
+
+            <div class="interactive-challenge">
+                <h2 class="challenge-title">🎯 Welche Option passt zu dir?</h2>
+                <p style="color: #fff; margin-bottom: 20px; font-size: 1.1rem;">Klick auf deine Situation und erhalte eine maßgeschneiderte Empfehlung:</p>
+                
+                <div class="decision-matrix">
+                    <div class="scenario-card">
+                        <h3 class="scenario-title">🚀 Sofort starten</h3>
+                        <p style="color: #34495e;">Ich will sofort mit Automatisierungen loslegen und mich null mit Technik beschäftigen.</p>
+                        <div class="recommendation rec-cloud">
+                            → N8N Cloud ist perfekt!
+                        </div>
+                    </div>
+                    
+                    <div class="scenario-card">
+                        <h3 class="scenario-title">💰 Smart sparen</h3>
+                        <p style="color: #34495e;">Ich will langfristig Geld sparen aber nicht komplett alles selbst machen.</p>
+                        <div class="recommendation" style="background: rgba(240, 147, 251, 0.2); color: #8e44ad;">
+                            → Hostinger ist dein Sweet Spot!
+                        </div>
+                    </div>
+                    
+                    <div class="scenario-card">
+                        <h3 class="scenario-title">🔒 Datenschutz-Fokus</h3>
+                        <p style="color: #34495e;">Sensible Kundendaten sollen DSGVO-konform und sicher verarbeitet werden.</p>
+                        <div class="recommendation" style="background: rgba(240, 147, 251, 0.2); color: #8e44ad;">
+                            → Hostinger (EU) oder Self-Hosted!
+                        </div>
+                    </div>
+                    
+                    <div class="scenario-card">
+                        <h3 class="scenario-title">⚡ Power-User</h3>
+                        <p style="color: #34495e;">Ich plane 50+ Workflows mit npm-Packages und Python-Code.</p>
+                        <div class="recommendation" style="background: rgba(240, 147, 251, 0.2); color: #8e44ad;">
+                            → Hostinger oder Self-Hosted!
+                        </div>
+                    </div>
+                    
+                    <div class="scenario-card">
+                        <h3 class="scenario-title">🎓 Lern-Phase</h3>
+                        <p style="color: #34495e;">Ich bin Anfänger und will erstmal experimentieren ohne Technik-Stress.</p>
+                        <div class="recommendation rec-cloud">
+                            → N8N Cloud für entspanntes Lernen!
+                        </div>
+                    </div>
+                    
+                    <div class="scenario-card">
+                        <h3 class="scenario-title">⚙️ Tech-Liebhaber</h3>
+                        <p style="color: #34495e;">Ich liebe es, Systeme zu konfigurieren und will maximale Kontrolle.</p>
+                        <div class="recommendation rec-selfhosted">
+                            → Self-Hosted für ultimative Power!
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 30px;">
+                    <p style="color: #fff; font-size: 1.1rem;">
+                        💡 <strong>Klick auf deine Situation für eine maßgeschneiderte Empfehlung</strong>
+                    </p>
+                </div>
+            </div>
+
+            <div class="business-impact">
+                <div class="impact-card service-provider">
+                    <h3 class="impact-title">💼 Als Service-Anbieter</h3>
+                    <ul class="benefit-list">
+                        <li><strong>Cloud für Demos:</strong> Schneller Kundenzugang für Präsentationen</li>
+                        <li><strong>Hostinger für Production:</strong> €200+/Jahr sparen bei vollem Feature-Set</li>
+                        <li><strong>VPS für Enterprise:</strong> Maximale Kontrolle bei speziellen Anforderungen</li>
+                        <li><strong>Setup-Beratung:</strong> Hostinger-Setup als €500+ Service verkaufen</li>
+                        <li><strong>Hybrid-Expertise:</strong> Alle Optionen beherrschen = höhere Kompetenz</li>
+                    </ul>
+                </div>
+                
+                <div class="impact-card business-owner">
+                    <h3 class="impact-title">⚡ Für dein eigenes Business</h3>
+                    <ul class="benefit-list">
+                        <li><strong>Cloud für den Start:</strong> Sofort produktiv ohne IT-Kopfschmerzen</li>
+                        <li><strong>Hostinger für Wachstum:</strong> €200+/Jahr sparen ab 5+ Workflows</li>
+                        <li><strong>Keine Execution-Limits:</strong> Beliebig viele Automatisierungen skalieren</li>
+                        <li><strong>npm-Package-Power:</strong> Externe Libraries für bessere Workflows</li>
+                        <li><strong>Future-proof:</strong> Jederzeit zwischen Optionen wechseln</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2 class="section-title">💡 Olli's ehrliche Empfehlung</h2>
+                <p class="body-text">Nach 2+ Jahren N8N-Erfahrung nutze ich selbst <strong>alle drei Varianten</strong> - und das aus gutem Grund!</p>
+                
+                <div class="highlight-box">
+                    <p><strong>🎯 Mein Multi-Setup-Ansatz:</strong></p>
+                    <p>• <strong>N8N Cloud</strong> für Kundendemos und schnelle Proof-of-Concepts</p>
+                    <p>• <strong>Hostinger</strong> für Produktions-Workflows (beste Balance!)</p>
+                    <p>• <strong>Self-Hosted VPS</strong> für spezielle Enterprise-Projekte</p>
+                </div>
+                
+                <div style="background: #f8f9fa; border: 2px solid #667eea; border-radius: 16px; padding: 25px; margin: 25px 0;">
+                    <h3 style="color: #667eea; font-size: 1.4rem; margin-bottom: 15px;">🏆 Olli's #1 Empfehlung: Hostinger</h3>
+                    <p style="color: #2c3e50; margin-bottom: 10px;"><strong>Warum Hostinger der Sweet Spot ist:</strong></p>
+                    <p style="color: #34495e; margin-bottom: 8px;">• €84/Jahr statt €240+ (65% Ersparnis gegenüber Cloud)</p>
+                    <p style="color: #34495e; margin-bottom: 8px;">• Managed Docker = Kein Stress mit Server-Administration</p>
+                    <p style="color: #34495e; margin-bottom: 8px;">• EU-Datenschutz = DSGVO-konforme Datenverarbeitung</p>
+                    <p style="color: #34495e; margin-bottom: 8px;">• Keine Workflow-Limits = Echte Business-Skalierung</p>
+                    <p style="color: #34495e; margin-bottom: 8px;">• npm-Support = Alle Code-Features verfügbar</p>
+                    <p style="color: #34495e;">• 1-Click-Setup über meinen Link = In 15 Minuten online</p>
+                </div>
+                
+                <p class="body-text"><strong>Für absolute Einsteiger:</strong> Startet mit N8N Cloud zum Lernen. Nach 2-3 Monaten wechselt zu Hostinger für echte Business-Power.</p>
+                
+                <p class="body-text"><strong>Für Business-User:</strong> Hostinger ist der No-Brainer! Managed, günstig, ohne Limits - perfekt für ernsthafte Automatisierung.</p>
+                
+                <p class="body-text"><strong>Für Tech-Experten:</strong> Self-Hosted VPS wenn ihr spezielle Compliance-Anforderungen habt oder maximale Kontrolle braucht.</p>
+                
+                <div style="background: #f8f9fa; border: 2px solid #27ae60; border-radius: 16px; padding: 30px; margin-top: 30px;">
+                    <h3 style="color: #2c3e50; font-size: 1.4rem; margin-bottom: 20px; text-align: center;">🎁 Bonus für Premium-Members</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                        <div style="background: rgba(39, 174, 96, 0.1); padding: 20px; border-radius: 12px; text-align: center;">
+                            <span style="font-size: 2rem; display: block; margin-bottom: 10px;">🎥</span>
+                            <h4 style="color: #27ae60; margin-bottom: 10px;">Setup-Videos</h4>
+                            <p style="color: #2c3e50; font-size: 0.9rem;">Live-Setup beider Varianten</p>
+                        </div>
+                        <div style="background: rgba(240, 147, 251, 0.1); padding: 20px; border-radius: 12px; text-align: center;">
+                            <span style="font-size: 2rem; display: block; margin-bottom: 10px;">🚀</span>
+                            <h4 style="color: #8e44ad; margin-bottom: 10px;">Hostinger 1-Click</h4>
+                            <p style="color: #2c3e50; font-size: 0.9rem;">15-Minuten-Setup über mupf.me/hostinger</p>
+                        </div>
+                        <div style="background: rgba(39, 174, 96, 0.1); padding: 20px; border-radius: 12px; text-align: center;">
+                            <span style="font-size: 2rem; display: block; margin-bottom: 10px;">⚡</span>
+                            <h4 style="color: #27ae60; margin-bottom: 10px;">VPS-Templates</h4>
+                            <p style="color: #2c3e50; font-size: 0.9rem;">Docker-Compose Ready-to-Deploy</p>
+                        </div>
+                    </div>
+                    <div style="text-align: center; margin-top: 20px;">
+                        <p style="color: #2c3e50; font-size: 0.95rem;">
+                            🎯 <strong>Empfehlung:</strong> N8N Cloud → Hostinger → VPS (je nach Wachstum)<br>
+                            📊 <strong>Kosten-Vergleich:</strong> 3-Jahres-TCO-Rechnung für fundierte Entscheidung<br>
+                            🔄 <strong>Migration-Service:</strong> Workflows problemlos zwischen Optionen übertragen
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="next-steps">
+                <h2 class="next-title">🎬 Bereit für Teil 2?</h2>
+                <p style="color: #34495e; font-size: 1.1rem; margin-bottom: 20px;">
+                    Du weißt jetzt welche Setup-Option zu dir passt! Im nächsten Video zeige ich dir die N8N-Oberfläche im Detail:
+                    <strong>"N8N Canvas Mastery - Deine Workflow-Werkzeugkiste"</strong>
+                </p>
+                
+                <div class="highlight-box">
+                    <p><strong>Was dich in Teil 2 erwartet:</strong></p>
+                    <p>→ Nodes verstehen: Anatomie, Inputs, Settings & Outputs</p>
+                    <p>→ Trigger-Nodes mastern: Manuelle, zeitbasierte & API-Trigger</p>
+                    <p>→ Die 5 wichtigsten Node-Kategorien im Überblick</p>
+                    <p>→ "Advanced AI", "Data transformation" & "Flow Control"</p>
+                    <p>→ Dein erstes funktionsfähiges Workflow-Setup</p>
+                </div>
+                
+                <div style="margin-top: 30px; padding: 20px; background: #f8f9fa; border: 2px solid #667eea; border-radius: 12px; border-left: 4px solid #667eea;">
+                    <p style="color: #2c3e50; font-weight: 600; margin-bottom: 10px;">🎯 Deine Aufgabe bis zum nächsten Video:</p>
+                    <p style="color: #34495e;">Entscheide dich für eine Option und richte deinen N8N-Account ein. Bei Fragen nutze gerne den Premium-Support!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
