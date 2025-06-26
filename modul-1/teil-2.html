@@ -499,262 +499,6 @@
                 <button class="nav-button" onclick="showSection('examples')">📚 Live-Beispiele</button>
             </div>
 
-            <!-- APIs & HTTP verstehen Section -->
-            <div id="api-basics-section" class="playground-section">
-                <div class="section-card">
-                    <h2 class="section-title">🌐 APIs & HTTP verstehen</h2>
-                    
-                    <!-- API Einführung -->
-                    <div style="margin-bottom: 3rem;">
-                        <h3 style="color: #667eea; font-size: 1.8rem; margin-bottom: 1rem;">🌐 APIs - Wie ein Kellner im Restaurant</h3>
-                        <p style="color: rgba(255, 255, 255, 0.9); font-size: 1.1rem; line-height: 1.6; margin-bottom: 1rem;">
-                            APIs sind überall! Jede App auf deinem Handy, jede Website - sie alle nutzen APIs um miteinander zu sprechen. Das Coole: Es ist eigentlich ganz logisch!
-                        </p>
-                        
-                        <div class="highlight-box">
-                            <p><strong>💡 Einfacher Vergleich:</strong> Eine API ist wie ein Kellner im Restaurant. Du sagst dem Kellner was du willst, er geht in die Küche und bringt dir das Essen. Du musst nicht in die Küche - der Kellner regelt alles!</p>
-                        </div>
-                        
-                        <!-- API Grundlagen -->
-                        <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 15px; padding: 2rem; margin: 2rem 0;">
-                            <h4 style="color: #f093fb; font-size: 1.4rem; margin-bottom: 1.5rem; text-align: center;">🎯 So funktionieren APIs im echten Leben:</h4>
-                            
-                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
-                                <div style="background: rgba(102, 126, 234, 0.1); border: 1px solid rgba(102, 126, 234, 0.3); border-radius: 12px; padding: 1.5rem;">
-                                    <h5 style="color: #667eea; font-size: 1.2rem; margin-bottom: 1rem;">📱 Wetter-App</h5>
-                                    <p style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem; margin-bottom: 1rem;">
-                                        Du öffnest eine Wetter-App → Sie fragt eine Wetter-API → Du bekommst das aktuelle Wetter
-                                    </p>
-                                    <div style="background: #1a1a2e; border-radius: 8px; padding: 1rem; font-family: monospace; font-size: 0.8rem;">
-GET wetter-api.com/berlin<br>
-→ {"temperatur": 22, "wetter": "sonnig"}
-                                    </div>
-                                </div>
-                                
-                                <div style="background: rgba(78, 205, 196, 0.1); border: 1px solid rgba(78, 205, 196, 0.3); border-radius: 12px; padding: 1.5rem;">
-                                    <h5 style="color: #4ecdc4; font-size: 1.2rem; margin-bottom: 1rem;">🛒 Online-Shop</h5>
-                                    <p style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem; margin-bottom: 1rem;">
-                                        Du kaufst etwas → Shop sendet Daten an Payment-API → Zahlung wird verarbeitet
-                                    </p>
-                                    <div style="background: #1a1a2e; border-radius: 8px; padding: 1rem; font-family: monospace; font-size: 0.8rem;">
-POST payment-api.com/charge<br>
-{"amount": 99.99, "customer": "max@email.com"}
-                                    </div>
-                                </div>
-                                
-                                <div style="background: rgba(255, 147, 251, 0.1); border: 1px solid rgba(255, 147, 251, 0.3); border-radius: 12px; padding: 1.5rem;">
-                                    <h5 style="color: #f093fb; font-size: 1.2rem; margin-bottom: 1rem;">🤖 ChatGPT</h5>
-                                    <p style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem; margin-bottom: 1rem;">
-                                        Du stellst eine Frage → App sendet an OpenAI-API → KI antwortet dir
-                                    </p>
-                                    <div style="background: #1a1a2e; border-radius: 8px; padding: 1rem; font-family: monospace; font-size: 0.8rem;">
-POST openai.com/chat<br>
-{"message": "Erkläre mir APIs"}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- HTTP Methods -->
-                        <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 15px; padding: 2rem; margin: 2rem 0;">
-                            <h4 style="color: #ffa726; font-size: 1.4rem; margin-bottom: 1.5rem; text-align: center;">🚗 HTTP-Methods - Die Sprache der APIs:</h4>
-                            
-                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
-                                <div style="text-align: center; padding: 1.5rem; background: rgba(39, 174, 96, 0.1); border: 1px solid rgba(39, 174, 96, 0.3); border-radius: 12px;">
-                                    <div style="font-size: 2rem; margin-bottom: 1rem;">📥</div>
-                                    <h6 style="color: #27ae60; margin-bottom: 1rem; font-size: 1.1rem;">GET - Daten holen</h6>
-                                    <p style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem; margin-bottom: 1rem;">
-                                        "Gib mir Informationen"<br>
-                                        Wie: Speisekarte anschauen
-                                    </p>
-                                    <code style="background: #1a1a2e; padding: 0.5rem; border-radius: 4px; color: #27ae60; font-size: 0.8rem;">GET /users/123</code>
-                                </div>
-                                
-                                <div style="text-align: center; padding: 1.5rem; background: rgba(52, 152, 219, 0.1); border: 1px solid rgba(52, 152, 219, 0.3); border-radius: 12px;">
-                                    <div style="font-size: 2rem; margin-bottom: 1rem;">📤</div>
-                                    <h6 style="color: #3498db; margin-bottom: 1rem; font-size: 1.1rem;">POST - Neu erstellen</h6>
-                                    <p style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem; margin-bottom: 1rem;">
-                                        "Erstelle etwas Neues"<br>
-                                        Wie: Bestellung aufgeben
-                                    </p>
-                                    <code style="background: #1a1a2e; padding: 0.5rem; border-radius: 4px; color: #3498db; font-size: 0.8rem;">POST /users</code>
-                                </div>
-                                
-                                <div style="text-align: center; padding: 1.5rem; background: rgba(241, 196, 15, 0.1); border: 1px solid rgba(241, 196, 15, 0.3); border-radius: 12px;">
-                                    <div style="font-size: 2rem; margin-bottom: 1rem;">✏️</div>
-                                    <h6 style="color: #f1c40f; margin-bottom: 1rem; font-size: 1.1rem;">PUT - Aktualisieren</h6>
-                                    <p style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem; margin-bottom: 1rem;">
-                                        "Ändere bestehende Daten"<br>
-                                        Wie: Bestellung ändern
-                                    </p>
-                                    <code style="background: #1a1a2e; padding: 0.5rem; border-radius: 4px; color: #f1c40f; font-size: 0.8rem;">PUT /users/123</code>
-                                </div>
-                                
-                                <div style="text-align: center; padding: 1.5rem; background: rgba(231, 76, 60, 0.1); border: 1px solid rgba(231, 76, 60, 0.3); border-radius: 12px;">
-                                    <div style="font-size: 2rem; margin-bottom: 1rem;">🗑️</div>
-                                    <h6 style="color: #e74c3c; margin-bottom: 1rem; font-size: 1.1rem;">DELETE - Löschen</h6>
-                                    <p style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem; margin-bottom: 1rem;">
-                                        "Entferne das"<br>
-                                        Wie: Bestellung stornieren
-                                    </p>
-                                    <code style="background: #1a1a2e; padding: 0.5rem; border-radius: 4px; color: #e74c3c; font-size: 0.8rem;">DELETE /users/123</code>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- HTTP Request Anatomy -->
-                        <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 15px; padding: 2rem; margin: 2rem 0;">
-                            <h4 style="color: #667eea; font-size: 1.4rem; margin-bottom: 1rem; text-align: center;">📋 Anatomie eines HTTP-Requests</h4>
-                            <p style="color: rgba(255, 255, 255, 0.8); text-align: center; margin-bottom: 1.5rem;">So ist jeder API-Request aufgebaut - wie ein Brief mit festen Regeln:</p>
-                            
-                            <div style="background: #1a1a2e; border-radius: 12px; padding: 1.5rem; font-family: monospace; font-size: 0.9rem; line-height: 1.5; overflow-x: auto;">
-<span style="color: #f093fb;">POST</span> <span style="color: #4ecdc4;">https://api.example.com/users</span> <span style="color: #ffa726;">HTTP/1.1</span><br><br>
-
-<span style="color: #667eea;">Headers (Kopfzeile - wie Briefumschlag):</span><br>
-<span style="color: #f093fb;">Authorization:</span> <span style="color: #4ecdc4;">Bearer your-api-key-123</span><br>
-<span style="color: #f093fb;">Content-Type:</span> <span style="color: #4ecdc4;">application/json</span><br>
-<span style="color: #f093fb;">Accept:</span> <span style="color: #4ecdc4;">application/json</span><br><br>
-
-<span style="color: #667eea;">Body (Inhalt - wie Briefinhalt):</span><br>
-{<br>
-  <span style="color: #f093fb;">"name"</span>: <span style="color: #4ecdc4;">"Max Mustermann"</span>,<br>
-  <span style="color: #f093fb;">"email"</span>: <span style="color: #4ecdc4;">"max@example.com"</span>,<br>
-  <span style="color: #f093fb;">"role"</span>: <span style="color: #4ecdc4;">"customer"</span><br>
-}
-                            </div>
-                            
-                            <div style="margin-top: 1.5rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
-                                <div style="background: rgba(102, 126, 234, 0.1); border-radius: 8px; padding: 1rem;">
-                                    <strong style="color: #667eea;">📍 URL (Adresse):</strong><br>
-                                    <span style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem;">
-                                        Wohin soll der Request? Wie eine Postadresse - muss exakt stimmen!
-                                    </span>
-                                </div>
-                                
-                                <div style="background: rgba(240, 147, 251, 0.1); border-radius: 8px; padding: 1rem;">
-                                    <strong style="color: #f093fb;">🏷️ Headers (Zusatzinfos):</strong><br>
-                                    <span style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem;">
-                                        API-Key, Datenformat, Sprache - alles was die API wissen muss
-                                    </span>
-                                </div>
-                                
-                                <div style="background: rgba(78, 205, 196, 0.1); border-radius: 8px; padding: 1rem;">
-                                    <strong style="color: #4ecdc4;">📦 Body (Daten):</strong><br>
-                                    <span style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem;">
-                                        Die eigentlichen Daten - meist als JSON formatiert
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Authentication Beispiele -->
-                        <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 15px; padding: 2rem; margin: 2rem 0;">
-                            <h4 style="color: #e74c3c; font-size: 1.4rem; margin-bottom: 1rem; text-align: center;">🔐 API-Authentication - Der Türsteher</h4>
-                            <p style="color: rgba(255, 255, 255, 0.8); text-align: center; margin-bottom: 1.5rem;">APIs sind wie exklusive Clubs - du brauchst einen "Ausweis" um reinzukommen!</p>
-                            
-                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
-                                <div style="background: rgba(52, 152, 219, 0.1); border: 1px solid rgba(52, 152, 219, 0.3); border-radius: 12px; padding: 1.5rem;">
-                                    <h5 style="color: #3498db; font-size: 1.2rem; margin-bottom: 1rem;">🔑 API-Key Authentication</h5>
-                                    <p style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem; margin-bottom: 1rem;">
-                                        Wie ein Hausschlüssel - einfach aber wirksam
-                                    </p>
-                                    <div style="background: #1a1a2e; border-radius: 8px; padding: 1rem; font-family: monospace; font-size: 0.8rem;">
-<span style="color: #f093fb;">x-api-key:</span> <span style="color: #4ecdc4;">sk-1234567890abcdef</span><br><br>
-<span style="color: #667eea;"># Oder im Header:</span><br>
-<span style="color: #f093fb;">Authorization:</span> <span style="color: #4ecdc4;">Bearer sk-1234567890abcdef</span>
-                                    </div>
-                                </div>
-                                
-                                <div style="background: rgba(155, 89, 182, 0.1); border: 1px solid rgba(155, 89, 182, 0.3); border-radius: 12px; padding: 1.5rem;">
-                                    <h5 style="color: #9b59b6; font-size: 1.2rem; margin-bottom: 1rem;">🎫 Bearer Token</h5>
-                                    <p style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem; margin-bottom: 1rem;">
-                                        Wie ein VIP-Ticket - zeitlich begrenzt aber mächtig
-                                    </p>
-                                    <div style="background: #1a1a2e; border-radius: 8px; padding: 1rem; font-family: monospace; font-size: 0.8rem;">
-<span style="color: #f093fb;">Authorization:</span> <span style="color: #4ecdc4;">Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...</span><br><br>
-<span style="color: #667eea;"># JWT Token - läuft meist nach 1-24h ab</span>
-                                    </div>
-                                </div>
-                                
-                                <div style="background: rgba(230, 126, 34, 0.1); border: 1px solid rgba(230, 126, 34, 0.3); border-radius: 12px; padding: 1.5rem;">
-                                    <h5 style="color: #e67e22; font-size: 1.2rem; margin-bottom: 1rem;">📝 Basic Auth</h5>
-                                    <p style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem; margin-bottom: 1rem;">
-                                        Wie ein Ausweis - Username und Passwort
-                                    </p>
-                                    <div style="background: #1a1a2e; border-radius: 8px; padding: 1rem; font-family: monospace; font-size: 0.8rem;">
-<span style="color: #f093fb;">Authorization:</span> <span style="color: #4ecdc4;">Basic dXNlcm5hbWU6cGFzc3dvcmQ=</span><br><br>
-<span style="color: #667eea;"># Base64 encoded "username:password"</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Business Use Cases -->
-                        <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 15px; padding: 2rem; margin: 2rem 0;">
-                            <h4 style="color: #27ae60; font-size: 1.4rem; margin-bottom: 1rem; text-align: center;">💼 APIs im Business - Echte Anwendungsfälle</h4>
-                            <p style="color: rgba(255, 255, 255, 0.8); text-align: center; margin-bottom: 1.5rem;">So nutzen echte Unternehmen APIs für Automatisierung und Effizienz:</p>
-                            
-                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
-                                <div style="background: rgba(46, 204, 113, 0.1); border: 1px solid rgba(46, 204, 113, 0.3); border-radius: 12px; padding: 1.5rem;">
-                                    <h5 style="color: #2ecc71; font-size: 1.1rem; margin-bottom: 1rem;">🛒 E-Commerce Automation</h5>
-                                    <ul style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem; list-style: none; padding: 0;">
-                                        <li style="margin-bottom: 0.5rem;">• Neue Bestellung → API → Lager-System</li>
-                                        <li style="margin-bottom: 0.5rem;">• Zahlung eingegangen → API → Versand</li>
-                                        <li style="margin-bottom: 0.5rem;">• Retoure → API → Rückerstattung</li>
-                                    </ul>
-                                    <p style="color: #2ecc71; font-size: 0.8rem; margin-top: 1rem;"><strong>Ersparnis: 15h/Woche Verwaltung</strong></p>
-                                </div>
-                                
-                                <div style="background: rgba(52, 152, 219, 0.1); border: 1px solid rgba(52, 152, 219, 0.3); border-radius: 12px; padding: 1.5rem;">
-                                    <h5 style="color: #3498db; font-size: 1.1rem; margin-bottom: 1rem;">📊 CRM Integration</h5>
-                                    <ul style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem; list-style: none; padding: 0;">
-                                        <li style="margin-bottom: 0.5rem;">• Neue Leads → API → Bewertung</li>
-                                        <li style="margin-bottom: 0.5rem;">• E-Mail Öffnung → API → Score-Update</li>
-                                        <li style="margin-bottom: 0.5rem;">• Deal gewonnen → API → Rechnung</li>
-                                    </ul>
-                                    <p style="color: #3498db; font-size: 0.8rem; margin-top: 1rem;"><strong>ROI: 40% mehr Conversions</strong></p>
-                                </div>
-                                
-                                <div style="background: rgba(155, 89, 182, 0.1); border: 1px solid rgba(155, 89, 182, 0.3); border-radius: 12px; padding: 1.5rem;">
-                                    <h5 style="color: #9b59b6; font-size: 1.1rem; margin-bottom: 1rem;">🤖 KI-Integration</h5>
-                                    <ul style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem; list-style: none; padding: 0;">
-                                        <li style="margin-bottom: 0.5rem;">• Kundenanfrage → ChatGPT-API → Antwort</li>
-                                        <li style="margin-bottom: 0.5rem;">• Dokument → OCR-API → Datenextraktion</li>
-                                        <li style="margin-bottom: 0.5rem;">• Text → Übersetzungs-API → 20 Sprachen</li>
-                                    </ul>
-                                    <p style="color: #9b59b6; font-size: 0.8rem; margin-top: 1rem;"><strong>Automation: 80% der Anfragen automatisch</strong></p>
-                                </div>
-                                
-                                <div style="background: rgba(230, 126, 34, 0.1); border: 1px solid rgba(230, 126, 34, 0.3); border-radius: 12px; padding: 1.5rem;">
-                                    <h5 style="color: #e67e22; font-size: 1.1rem; margin-bottom: 1rem;">📱 Social Media</h5>
-                                    <ul style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem; list-style: none; padding: 0;">
-                                        <li style="margin-bottom: 0.5rem;">• Neuer Post → API → Multi-Platform</li>
-                                        <li style="margin-bottom: 0.5rem;">• Mention → API → Benachrichtigung</li>
-                                        <li style="margin-bottom: 0.5rem;">• Viral Post → API → Analytics</li>
-                                    </ul>
-                                    <p style="color: #e67e22; font-size: 0.8rem; margin-top: 1rem;"><strong>Effizienz: 10x mehr Reichweite</strong></p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Call-to-Action zum Validator -->
-                        <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: rgba(102, 126, 234, 0.1); border: 1px solid rgba(102, 126, 234, 0.3); border-radius: 15px;">
-                            <h4 style="color: #667eea; font-size: 1.5rem; margin-bottom: 1rem;">🛠️ Zeit für die Praxis!</h4>
-                            <p style="color: rgba(255, 255, 255, 0.9); margin-bottom: 1.5rem;">
-                                Du verstehst jetzt APIs und HTTP! Zeit, selbst APIs zu testen und JSON zu validieren.
-                            </p>
-                            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                                <button class="action-button" onclick="showSection('json')" style="font-size: 1rem; padding: 0.8rem 1.5rem;">
-                                    📊 JSON-Validator
-                                </button>
-                                <button class="action-button success-button" onclick="showSection('api')" style="font-size: 1rem; padding: 0.8rem 1.5rem;">
-                                    🛠️ API-Tester
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             <!-- JSON Lernen Section -->
             <div id="learn-section" class="playground-section active">
                 <div class="section-card">
@@ -919,6 +663,172 @@ POST openai.com/chat<br>
                 </div>
             </div>
 
+            <!-- APIs & HTTP verstehen Section (NEU) -->
+            <div id="api-basics-section" class="playground-section">
+                <div class="section-card">
+                    <h2 class="section-title">🌐 APIs & HTTP verstehen</h2>
+                    
+                    <div style="margin-bottom: 3rem;">
+                        <h3 style="color: #667eea; font-size: 1.8rem; margin-bottom: 1rem;">🌐 APIs - Wie ein Kellner im Restaurant</h3>
+                        <p style="color: rgba(255, 255, 255, 0.9); font-size: 1.1rem; line-height: 1.6; margin-bottom: 1rem;">
+                            APIs sind überall! Jede App auf deinem Handy, jede Website - sie alle nutzen APIs um miteinander zu sprechen. Das Coole: Es ist eigentlich ganz logisch!
+                        </p>
+                        
+                        <div class="highlight-box">
+                            <p><strong>💡 Einfacher Vergleich:</strong> Eine API ist wie ein Kellner im Restaurant. Du sagst dem Kellner was du willst, er geht in die Küche und bringt dir das Essen. Du musst nicht in die Küche - der Kellner regelt alles!</p>
+                        </div>
+                        
+                        <!-- API Grundlagen -->
+                        <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 15px; padding: 2rem; margin: 2rem 0;">
+                            <h4 style="color: #f093fb; font-size: 1.4rem; margin-bottom: 1.5rem; text-align: center;">🎯 So funktionieren APIs im echten Leben:</h4>
+                            
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+                                <div style="background: rgba(102, 126, 234, 0.1); border: 1px solid rgba(102, 126, 234, 0.3); border-radius: 12px; padding: 1.5rem;">
+                                    <h5 style="color: #667eea; font-size: 1.2rem; margin-bottom: 1rem;">📱 Wetter-App</h5>
+                                    <p style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem; margin-bottom: 1rem;">
+                                        Du öffnest eine Wetter-App → Sie fragt eine Wetter-API → Du bekommst das aktuelle Wetter
+                                    </p>
+                                    <div style="background: #1a1a2e; border-radius: 8px; padding: 1rem; font-family: monospace; font-size: 0.8rem;">
+GET wetter-api.com/berlin<br>
+→ {"temperatur": 22, "wetter": "sonnig"}
+                                    </div>
+                                </div>
+                                
+                                <div style="background: rgba(78, 205, 196, 0.1); border: 1px solid rgba(78, 205, 196, 0.3); border-radius: 12px; padding: 1.5rem;">
+                                    <h5 style="color: #4ecdc4; font-size: 1.2rem; margin-bottom: 1rem;">🛒 Online-Shop</h5>
+                                    <p style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem; margin-bottom: 1rem;">
+                                        Du kaufst etwas → Shop sendet Daten an Payment-API → Zahlung wird verarbeitet
+                                    </p>
+                                    <div style="background: #1a1a2e; border-radius: 8px; padding: 1rem; font-family: monospace; font-size: 0.8rem;">
+POST payment-api.com/charge<br>
+{"amount": 99.99, "customer": "max@email.com"}
+                                    </div>
+                                </div>
+                                
+                                <div style="background: rgba(255, 147, 251, 0.1); border: 1px solid rgba(255, 147, 251, 0.3); border-radius: 12px; padding: 1.5rem;">
+                                    <h5 style="color: #f093fb; font-size: 1.2rem; margin-bottom: 1rem;">🤖 ChatGPT</h5>
+                                    <p style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem; margin-bottom: 1rem;">
+                                        Du stellst eine Frage → App sendet an OpenAI-API → KI antwortet dir
+                                    </p>
+                                    <div style="background: #1a1a2e; border-radius: 8px; padding: 1rem; font-family: monospace; font-size: 0.8rem;">
+POST openai.com/chat<br>
+{"message": "Erkläre mir APIs"}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- HTTP Methods -->
+                        <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 15px; padding: 2rem; margin: 2rem 0;">
+                            <h4 style="color: #ffa726; font-size: 1.4rem; margin-bottom: 1.5rem; text-align: center;">🚗 HTTP-Methods - Die Sprache der APIs:</h4>
+                            
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                                <div style="text-align: center; padding: 1.5rem; background: rgba(39, 174, 96, 0.1); border: 1px solid rgba(39, 174, 96, 0.3); border-radius: 12px;">
+                                    <div style="font-size: 2rem; margin-bottom: 1rem;">📥</div>
+                                    <h6 style="color: #27ae60; margin-bottom: 1rem; font-size: 1.1rem;">GET - Daten holen</h6>
+                                    <p style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem; margin-bottom: 1rem;">
+                                        "Gib mir Informationen"<br>
+                                        Wie: Speisekarte anschauen
+                                    </p>
+                                    <code style="background: #1a1a2e; padding: 0.5rem; border-radius: 4px; color: #27ae60; font-size: 0.8rem;">GET /users/123</code>
+                                </div>
+                                
+                                <div style="text-align: center; padding: 1.5rem; background: rgba(52, 152, 219, 0.1); border: 1px solid rgba(52, 152, 219, 0.3); border-radius: 12px;">
+                                    <div style="font-size: 2rem; margin-bottom: 1rem;">📤</div>
+                                    <h6 style="color: #3498db; margin-bottom: 1rem; font-size: 1.1rem;">POST - Neu erstellen</h6>
+                                    <p style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem; margin-bottom: 1rem;">
+                                        "Erstelle etwas Neues"<br>
+                                        Wie: Bestellung aufgeben
+                                    </p>
+                                    <code style="background: #1a1a2e; padding: 0.5rem; border-radius: 4px; color: #3498db; font-size: 0.8rem;">POST /users</code>
+                                </div>
+                                
+                                <div style="text-align: center; padding: 1.5rem; background: rgba(241, 196, 15, 0.1); border: 1px solid rgba(241, 196, 15, 0.3); border-radius: 12px;">
+                                    <div style="font-size: 2rem; margin-bottom: 1rem;">✏️</div>
+                                    <h6 style="color: #f1c40f; margin-bottom: 1rem; font-size: 1.1rem;">PUT - Aktualisieren</h6>
+                                    <p style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem; margin-bottom: 1rem;">
+                                        "Ändere bestehende Daten"<br>
+                                        Wie: Bestellung ändern
+                                    </p>
+                                    <code style="background: #1a1a2e; padding: 0.5rem; border-radius: 4px; color: #f1c40f; font-size: 0.8rem;">PUT /users/123</code>
+                                </div>
+                                
+                                <div style="text-align: center; padding: 1.5rem; background: rgba(231, 76, 60, 0.1); border: 1px solid rgba(231, 76, 60, 0.3); border-radius: 12px;">
+                                    <div style="font-size: 2rem; margin-bottom: 1rem;">🗑️</div>
+                                    <h6 style="color: #e74c3c; margin-bottom: 1rem; font-size: 1.1rem;">DELETE - Löschen</h6>
+                                    <p style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem; margin-bottom: 1rem;">
+                                        "Entferne das"<br>
+                                        Wie: Bestellung stornieren
+                                    </p>
+                                    <code style="background: #1a1a2e; padding: 0.5rem; border-radius: 4px; color: #e74c3c; font-size: 0.8rem;">DELETE /users/123</code>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- HTTP Request Anatomy -->
+                        <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 15px; padding: 2rem; margin: 2rem 0;">
+                            <h4 style="color: #667eea; font-size: 1.4rem; margin-bottom: 1rem; text-align: center;">📋 Anatomie eines HTTP-Requests</h4>
+                            <p style="color: rgba(255, 255, 255, 0.8); text-align: center; margin-bottom: 1.5rem;">So ist jeder API-Request aufgebaut - wie ein Brief mit festen Regeln:</p>
+                            
+                            <div style="background: #1a1a2e; border-radius: 12px; padding: 1.5rem; font-family: monospace; font-size: 0.9rem; line-height: 1.5; overflow-x: auto;">
+<span style="color: #f093fb;">POST</span> <span style="color: #4ecdc4;">https://api.example.com/users</span> <span style="color: #ffa726;">HTTP/1.1</span><br><br>
+
+<span style="color: #667eea;">Headers (Kopfzeile - wie Briefumschlag):</span><br>
+<span style="color: #f093fb;">Authorization:</span> <span style="color: #4ecdc4;">Bearer your-api-key-123</span><br>
+<span style="color: #f093fb;">Content-Type:</span> <span style="color: #4ecdc4;">application/json</span><br>
+<span style="color: #f093fb;">Accept:</span> <span style="color: #4ecdc4;">application/json</span><br><br>
+
+<span style="color: #667eea;">Body (Inhalt - wie Briefinhalt):</span><br>
+{<br>
+  <span style="color: #f093fb;">"name"</span>: <span style="color: #4ecdc4;">"Max Mustermann"</span>,<br>
+  <span style="color: #f093fb;">"email"</span>: <span style="color: #4ecdc4;">"max@example.com"</span>,<br>
+  <span style="color: #f093fb;">"role"</span>: <span style="color: #4ecdc4;">"customer"</span><br>
+}
+                            </div>
+                            
+                            <div style="margin-top: 1.5rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                                <div style="background: rgba(102, 126, 234, 0.1); border-radius: 8px; padding: 1rem;">
+                                    <strong style="color: #667eea;">📍 URL (Adresse):</strong><br>
+                                    <span style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem;">
+                                        Wohin soll der Request? Wie eine Postadresse - muss exakt stimmen!
+                                    </span>
+                                </div>
+                                
+                                <div style="background: rgba(240, 147, 251, 0.1); border-radius: 8px; padding: 1rem;">
+                                    <strong style="color: #f093fb;">🏷️ Headers (Zusatzinfos):</strong><br>
+                                    <span style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem;">
+                                        API-Key, Datenformat, Sprache - alles was die API wissen muss
+                                    </span>
+                                </div>
+                                
+                                <div style="background: rgba(78, 205, 196, 0.1); border-radius: 8px; padding: 1rem;">
+                                    <strong style="color: #4ecdc4;">📦 Body (Daten):</strong><br>
+                                    <span style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem;">
+                                        Die eigentlichen Daten - meist als JSON formatiert
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Call-to-Action zum Validator -->
+                        <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: rgba(102, 126, 234, 0.1); border: 1px solid rgba(102, 126, 234, 0.3); border-radius: 15px;">
+                            <h4 style="color: #667eea; font-size: 1.5rem; margin-bottom: 1rem;">🛠️ Zeit für die Praxis!</h4>
+                            <p style="color: rgba(255, 255, 255, 0.9); margin-bottom: 1.5rem;">
+                                Du verstehst jetzt APIs und HTTP! Zeit, selbst APIs zu testen und JSON zu validieren.
+                            </p>
+                            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                                <button class="action-button" onclick="showSection('json')" style="font-size: 1rem; padding: 0.8rem 1.5rem;">
+                                    📊 JSON-Validator
+                                </button>
+                                <button class="action-button success-button" onclick="showSection('api')" style="font-size: 1rem; padding: 0.8rem 1.5rem;">
+                                    🛠️ API-Tester
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- JSON Validator Section -->
             <div id="json-section" class="playground-section">
                 <div class="section-card">
@@ -1004,7 +914,7 @@ POST openai.com/chat<br>
             <!-- API Tester Section -->
             <div id="api-section" class="playground-section">
                 <div class="section-card">
-                    <h2 class="section-title">🌐 API-Tester (Wie Postman im Browser)</h2>
+                    <h2 class="section-title">🛠️ API-Tester (Wie Postman im Browser)</h2>
                     
                     <div class="api-form">
                         <div class="form-group">
@@ -1778,3 +1688,5 @@ POST openai.com/chat<br>
         updateBodyVisibility();
         updateRequestDisplay();
     </script>
+</body>
+</html>
