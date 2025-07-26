@@ -68,11 +68,26 @@
             background: rgba(20, 20, 20, 0.6);
             backdrop-filter: blur(20px) saturate(180%);
             border-radius: 30px;
-            padding: 40px 50px;
+            padding: 35px 45px;
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3),
                         inset 0 0 80px rgba(255, 255, 255, 0.02);
-            overflow: hidden;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .slide::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .slide::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+        }
+
+        .slide::-webkit-scrollbar-thumb {
+            background: rgba(120, 66, 255, 0.3);
+            border-radius: 4px;
         }
 
         .slide.active {
@@ -111,9 +126,9 @@
         }
 
         h2 {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 700;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             color: #ffffff;
             letter-spacing: -1px;
         }
@@ -121,17 +136,17 @@
         h2::after {
             content: '';
             display: block;
-            width: 80px;
-            height: 4px;
+            width: 60px;
+            height: 3px;
             background: linear-gradient(90deg, #7842ff 0%, #ff427b 100%);
-            margin-top: 15px;
+            margin-top: 10px;
             border-radius: 2px;
         }
 
         p, li {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            margin-bottom: 15px;
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 12px;
             color: #b8b8b8;
             font-weight: 400;
         }
@@ -248,15 +263,15 @@
             background: #0d0d0d;
             border: 1px solid #333;
             border-radius: 12px;
-            padding: 20px;
-            margin: 20px 0;
+            padding: 15px;
+            margin: 15px 0;
             font-family: 'Fira Code', monospace;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             overflow-x: auto;
             overflow-y: auto;
-            max-height: 400px;
+            max-height: 300px;
             position: relative;
-            line-height: 1.6;
+            line-height: 1.5;
             white-space: pre;
         }
 
@@ -321,8 +336,8 @@
             background: rgba(120, 66, 255, 0.1);
             border: 2px solid rgba(120, 66, 255, 0.3);
             border-radius: 15px;
-            padding: 25px;
-            margin: 20px 0;
+            padding: 20px;
+            margin: 15px 0;
             position: relative;
             overflow: hidden;
         }
@@ -353,15 +368,15 @@
         .feature-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin: 30px 0;
+            gap: 15px;
+            margin: 20px 0;
         }
 
         .feature-card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 20px;
-            padding: 25px;
+            padding: 20px;
             transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative;
             overflow: hidden;
@@ -390,15 +405,15 @@
         }
 
         .feature-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
+            font-size: 2rem;
+            margin-bottom: 10px;
             display: block;
             filter: drop-shadow(0 0 20px currentColor);
         }
 
         .feature-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 10px;
+            font-size: 1.2rem;
+            margin-bottom: 8px;
             color: #fff;
             font-weight: 600;
         }
@@ -407,8 +422,8 @@
         .demo-container {
             background: rgba(255, 255, 255, 0.05);
             border-radius: 20px;
-            padding: 25px;
-            margin: 20px 0;
+            padding: 20px;
+            margin: 15px 0;
         }
 
         .demo-input {
@@ -527,13 +542,13 @@
         <!-- Slide 1: Titel -->
         <div class="slide active">
             <h1>N8N Expressions ✨</h1>
-            <p style="text-align: center; font-size: 1.8rem; color: #b8b8b8; margin-bottom: 40px;">
+            <p style="text-align: center; font-size: 1.6rem; color: #b8b8b8; margin-bottom: 30px;">
                 Die Magie der dynamischen Werte <span class="emoji-bounce">🪄</span>
             </p>
-            <div class="code-snippet" style="font-size: 1.2rem; text-align: center;">
+            <div class="code-snippet" style="font-size: 1.1rem; text-align: center;">
                 {{$json.name}} + {{$now}} = <span class="code-keyword">Automatisierung</span> 🚀
             </div>
-            <p style="text-align: center; margin-top: 40px; color: #7842ff;">
+            <p style="text-align: center; margin-top: 30px; color: #7842ff;">
                 Mach deine Workflows intelligent und dynamisch!
             </p>
             <div class="progress-bar" style="width: 8.33%"></div>
@@ -542,7 +557,7 @@
         <!-- Slide 2: Was sind Expressions? -->
         <div class="slide">
             <h2>Was sind Expressions? 🤔</h2>
-            <p>Expressions nutzen die <span class="highlight">JMESPath-ähnliche Syntax</span> kombiniert mit <span class="highlight">JavaScript</span>, um deine Workflows dynamisch zu machen:</p>
+            <p>Expressions nutzen <span class="highlight">JavaScript in speziellen Klammern {{ }}</span>, um deine Workflows dynamisch zu machen:</p>
             <ul>
                 <li><strong>Dynamische Werte</strong> statt statischer Text</li>
                 <li><strong>Zugriff auf Daten</strong> aus vorherigen Nodes mit der N8N-eigenen Syntax</li>
@@ -570,7 +585,7 @@ Hallo {{<span class="code-function">$json</span>.<span class="code-keyword">name
         <!-- Slide 3: Expression Syntax -->
         <div class="slide">
             <h2>Die N8N Expression-Syntax 📝</h2>
-            <p style="text-align: center; font-size: 1.3rem; margin-bottom: 30px;">
+            <p style="text-align: center; font-size: 1.2rem; margin-bottom: 20px;">
                 N8N nutzt eine <span class="highlight">eigene Expression-Sprache</span> mit JavaScript-Support
             </p>
             
@@ -578,29 +593,29 @@ Hallo {{<span class="code-function">$json</span>.<span class="code-keyword">name
                 <div class="feature-card">
                     <span class="feature-icon" style="color: #7842ff;">{{ }}</span>
                     <h3>Einfache Expression</h3>
-                    <div class="code-snippet" style="margin-top: 10px;">
+                    <div class="code-snippet" style="margin-top: 10px; max-height: 80px;">
 {{<span class="code-function">$json</span>.<span class="code-keyword">email</span>}}
                     </div>
                 </div>
                 <div class="feature-card">
                     <span class="feature-icon" style="color: #ff427b;">🔗</span>
                     <h3>Text + Expression</h3>
-                    <div class="code-snippet" style="margin-top: 10px;">
+                    <div class="code-snippet" style="margin-top: 10px; max-height: 80px;">
 Email: {{<span class="code-function">$json</span>.<span class="code-keyword">email</span>}}
                     </div>
                 </div>
                 <div class="feature-card">
                     <span class="feature-icon" style="color: #42ffbd;">🎯</span>
                     <h3>Mehrere Expressions</h3>
-                    <div class="code-snippet" style="margin-top: 10px;">
+                    <div class="code-snippet" style="margin-top: 10px; max-height: 80px;">
 {{<span class="code-function">$json</span>.<span class="code-keyword">firstName</span>}} {{<span class="code-function">$json</span>.<span class="code-keyword">lastName</span>}}
                     </div>
                 </div>
             </div>
 
-            <div class="expression-box" style="margin-top: 20px;">
+            <div class="expression-box" style="margin-top: 15px;">
                 <h3>💡 Gut zu wissen:</h3>
-                <p>N8N's Expression-Sprache kombiniert eine JMESPath-ähnliche Syntax für Datenzugriff mit vollständigem JavaScript-Support für Berechnungen und Transformationen!</p>
+                <p style="font-size: 0.95rem;">N8N hat eine eigene Expression-Sprache entwickelt, die dir erlaubt, mit <code>$json</code> auf Daten zuzugreifen und gleichzeitig alle JavaScript-Funktionen zu nutzen!</p>
             </div>
             <div class="progress-bar" style="width: 25%"></div>
         </div>
@@ -944,26 +959,26 @@ Email: {{<span class="code-function">$json</span>.<span class="code-keyword">ema
         <div class="slide">
             <h2>Expression Pro-Tipps 🎓</h2>
             
-            <div style="display: grid; gap: 15px;">
-                <div style="background: rgba(255, 255, 255, 0.03); padding: 20px; border-radius: 15px; border-left: 4px solid #00b4d8;">
-                    <h3 style="color: #00b4d8; margin-bottom: 8px; font-size: 1.2rem;">🛡️ Fehler vermeiden</h3>
-                    <p style="font-size: 0.95rem;">Nutze den Optional Chaining Operator <code>?.</code> für sichere Zugriffe:<br>
+            <div style="display: grid; gap: 12px;">
+                <div style="background: rgba(255, 255, 255, 0.03); padding: 15px; border-radius: 12px; border-left: 4px solid #00b4d8;">
+                    <h3 style="color: #00b4d8; margin-bottom: 5px; font-size: 1.1rem;">🛡️ Fehler vermeiden</h3>
+                    <p style="font-size: 0.9rem;">Nutze den Optional Chaining Operator <code>?.</code> für sichere Zugriffe:<br>
                     <code style="color: #42ffbd;">{{$json.user?.email}}</code></p>
                 </div>
                 
-                <div style="background: rgba(255, 255, 255, 0.03); padding: 20px; border-radius: 15px; border-left: 4px solid #ff427b;">
-                    <h3 style="color: #ff427b; margin-bottom: 8px; font-size: 1.2rem;">💡 Expression Editor</h3>
-                    <p style="font-size: 0.95rem;">Nutze <strong>Strg/Cmd + Space</strong> für Autocomplete und Vorschläge!</p>
+                <div style="background: rgba(255, 255, 255, 0.03); padding: 15px; border-radius: 12px; border-left: 4px solid #ff427b;">
+                    <h3 style="color: #ff427b; margin-bottom: 5px; font-size: 1.1rem;">💡 Expression Editor</h3>
+                    <p style="font-size: 0.9rem;">Nutze <strong>Strg/Cmd + Space</strong> für Autocomplete und Vorschläge!</p>
                 </div>
                 
-                <div style="background: rgba(255, 255, 255, 0.03); padding: 20px; border-radius: 15px; border-left: 4px solid #42ffbd;">
-                    <h3 style="color: #42ffbd; margin-bottom: 8px; font-size: 1.2rem;">🐛 Debugging</h3>
-                    <p style="font-size: 0.95rem;">Teste Expressions mit dem "Execute Node" Button und prüfe die Ausgabe</p>
+                <div style="background: rgba(255, 255, 255, 0.03); padding: 15px; border-radius: 12px; border-left: 4px solid #42ffbd;">
+                    <h3 style="color: #42ffbd; margin-bottom: 5px; font-size: 1.1rem;">🐛 Debugging</h3>
+                    <p style="font-size: 0.9rem;">Teste Expressions mit dem "Execute Node" Button und prüfe die Ausgabe</p>
                 </div>
                 
-                <div style="background: rgba(255, 255, 255, 0.03); padding: 20px; border-radius: 15px; border-left: 4px solid #7842ff;">
-                    <h3 style="color: #7842ff; margin-bottom: 8px; font-size: 1.2rem;">📚 N8N Expression Language</h3>
-                    <p style="font-size: 0.95rem;">N8N nutzt eine eigene Expression-Sprache, die JMESPath-ähnliche Syntax mit vollständigem JavaScript kombiniert!</p>
+                <div style="background: rgba(255, 255, 255, 0.03); padding: 15px; border-radius: 12px; border-left: 4px solid #7842ff;">
+                    <h3 style="color: #7842ff; margin-bottom: 5px; font-size: 1.1rem;">📚 N8N Expression Language</h3>
+                    <p style="font-size: 0.9rem;">N8N nutzt eine eigene Expression-Sprache - einfach JavaScript in {{ }} Klammern mit speziellen Variablen wie $json!</p>
                 </div>
             </div>
 
