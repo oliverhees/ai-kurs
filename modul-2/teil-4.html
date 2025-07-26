@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="N8N Expressions meistern - Eine interaktive Präsentation über die Macht der Expressions in N8N">
+    <meta name="author" content="N8N Tutorial">
+    <meta property="og:title" content="N8N Expressions - Die Magie der dynamischen Werte">
+    <meta property="og:description" content="Lerne alles über N8N Expressions - von Basics bis zu fortgeschrittenen Techniken">
+    <meta property="og:type" content="website">
+    <title>N8N Expressions - Die Magie der dynamischen Werte</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Animated background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 20% 50%, rgba(120, 66, 255, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(255, 66, 120, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 20%, rgba(66, 255, 189, 0.1) 0%, transparent 50%);
+            animation: bgFloat 20s ease-in-out infinite;
+        }
+
+        @keyframes bgFloat {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+        }
+
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .slide {
+            width: 90%;
+            max-width: 1200px;
+            height: 85vh;
+            display: none;
+            animation: slideIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-radius: 30px;
+            padding: 40px 50px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3),
+                        inset 0 0 80px rgba(255, 255, 255, 0.02);
+            overflow: hidden;
+        }
+
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #7842ff 0%, #ff427b 50%, #42ffbd 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+            letter-spacing: -2px;
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.2); }
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #ffffff;
+            letter-spacing: -1px;
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #7842ff 0%, #ff427b 100%);
+            margin-top: 15px;
+            border-radius: 2px;
+        }
+
+        p, li {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: #b8b8b8;
+            font-weight: 400;
+        }
+
+        strong {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        li {
+            padding-left: 35px;
+            position: relative;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        li:hover {
+            transform: translateX(5px);
+            color: #ffffff;
+        }
+
+        li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #7842ff;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .navigation {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 100;
+        }
+
+        button {
+            padding: 14px 35px;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: linear-gradient(90deg, #7842ff 0%, #ff427b 100%);
+            transition: all 0.5s ease;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+        }
+
+        button:hover::before {
+            width: 100%;
+            height: 100%;
+            border-radius: 50px;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(120, 66, 255, 0.3);
+            color: white;
+            z-index: 1;
+        }
+
+        button span {
+            position: relative;
+            z-index: 2;
+        }
+
+        button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        button:disabled:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        .slide-counter {
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            font-size: 1rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        /* Code Snippet Styles */
+        .code-snippet {
+            background: #0d0d0d;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.95rem;
+            overflow-x: auto;
+            overflow-y: auto;
+            max-height: 400px;
+            position: relative;
+            line-height: 1.6;
+            white-space: pre;
+        }
+
+        .code-snippet::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        .code-snippet::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+        }
+
+        .code-snippet::-webkit-scrollbar-thumb {
+            background: rgba(120, 66, 255, 0.3);
+            border-radius: 4px;
+        }
+
+        .code-snippet::-webkit-scrollbar-thumb:hover {
+            background: rgba(120, 66, 255, 0.5);
+        }
+
+        .code-snippet::before {
+            content: 'N8N Expression';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background: #0d0d0d;
+            padding: 0 10px;
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        .code-snippet code {
+            color: #42ffbd;
+            font-family: 'Fira Code', monospace;
+        }
+
+        .code-comment {
+            color: #666;
+            font-style: italic;
+        }
+
+        .code-keyword {
+            color: #ff427b;
+        }
+
+        .code-string {
+            color: #ffd93d;
+        }
+
+        .code-number {
+            color: #ff6b6b;
+        }
+
+        .code-function {
+            color: #7842ff;
+        }
+
+        /* Expression Box */
+        .expression-box {
+            background: rgba(120, 66, 255, 0.1);
+            border: 2px solid rgba(120, 66, 255, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .expression-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(120, 66, 255, 0.1) 0%, transparent 70%);
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(180deg); }
+        }
+
+        .expression-box h3 {
+            color: #fff;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        /* Feature Grid */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 25px;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(120, 66, 255, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(120, 66, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            display: block;
+            filter: drop-shadow(0 0 20px currentColor);
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        /* Interactive Demo */
+        .demo-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .demo-input {
+            background: #0d0d0d;
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 15px;
+            color: #42ffbd;
+            font-family: 'Fira Code', monospace;
+            width: 100%;
+            margin: 10px 0;
+            transition: all 0.3s ease;
+        }
+
+        .demo-input:focus {
+            outline: none;
+            border-color: #7842ff;
+            box-shadow: 0 0 20px rgba(120, 66, 255, 0.3);
+        }
+
+        .demo-output {
+            background: #1a1a1a;
+            border: 1px solid #444;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            color: #fff;
+            min-height: 50px;
+        }
+
+        /* Highlight */
+        .highlight {
+            background: linear-gradient(135deg, #7842ff20, #ff427b20);
+            padding: 4px 12px;
+            border-radius: 6px;
+            border: 1px solid rgba(120, 66, 255, 0.3);
+            display: inline-block;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        /* Progress bar */
+        .progress-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #7842ff 0%, #ff427b 100%);
+            transition: width 0.3s ease;
+            border-radius: 0 3px 3px 0;
+        }
+
+        /* Emoji animations */
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .emoji-bounce {
+            display: inline-block;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        /* Loading */
+        .loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5rem;
+            color: #7842ff;
+            z-index: 1000;
+        }
+
+        /* Keyboard hint */
+        .keyboard-hint {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 0.85rem;
+            color: #666;
+            opacity: 0.8;
+        }
+
+        /* Expression result */
+        .expression-result {
+            display: inline-block;
+            background: rgba(66, 255, 189, 0.1);
+            border: 1px solid rgba(66, 255, 189, 0.3);
+            border-radius: 8px;
+            padding: 4px 10px;
+            margin: 0 5px;
+            color: #42ffbd;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            p, li { font-size: 1rem; }
+            .slide { padding: 30px; }
+            .feature-grid { grid-template-columns: 1fr; }
+            .code-snippet { font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="loading" id="loading">Lade Präsentation...</div>
+    
+    <div class="presentation-container">
+        <div class="slide-counter">
+            <span id="current-slide">1</span> / <span id="total-slides">12</span>
+        </div>
+
+        <!-- Slide 1: Titel -->
+        <div class="slide active">
+            <h1>N8N Expressions ✨</h1>
+            <p style="text-align: center; font-size: 1.8rem; color: #b8b8b8; margin-bottom: 40px;">
+                Die Magie der dynamischen Werte <span class="emoji-bounce">🪄</span>
+            </p>
+            <div class="code-snippet" style="font-size: 1.2rem; text-align: center;">
+                {{$json.name}} + {{$now}} = <span class="code-keyword">Automatisierung</span> 🚀
+            </div>
+            <p style="text-align: center; margin-top: 40px; color: #7842ff;">
+                Mach deine Workflows intelligent und dynamisch!
+            </p>
+            <div class="progress-bar" style="width: 8.33%"></div>
+        </div>
+
+        <!-- Slide 2: Was sind Expressions? -->
+        <div class="slide">
+            <h2>Was sind Expressions? 🤔</h2>
+            <p>Expressions nutzen die <span class="highlight">JMESPath-ähnliche Syntax</span> kombiniert mit <span class="highlight">JavaScript</span>, um deine Workflows dynamisch zu machen:</p>
+            <ul>
+                <li><strong>Dynamische Werte</strong> statt statischer Text</li>
+                <li><strong>Zugriff auf Daten</strong> aus vorherigen Nodes mit der N8N-eigenen Syntax</li>
+                <li><strong>JavaScript-Funktionen</strong> für Berechnungen und Transformationen</li>
+                <li><strong>Bedingungen und Logik</strong> für intelligente Entscheidungen</li>
+            </ul>
+            
+            <div class="expression-box">
+                <h3>📝 Einfaches Beispiel:</h3>
+                <div class="code-snippet">
+<span class="code-comment">// Statischer Text:</span>
+Hallo Max
+
+<span class="code-comment">// Mit N8N Expression:</span>
+Hallo {{<span class="code-function">$json</span>.<span class="code-keyword">name</span>}}
+
+<span class="code-comment">// N8N nutzt eine spezielle Syntax, die JavaScript innerhalb</span>
+<span class="code-comment">// der {{ }} Klammern erlaubt!</span>
+                </div>
+                <p style="margin-top: 15px;">Ergebnis: <span class="expression-result">Hallo Anna</span> (wenn name = "Anna")</p>
+            </div>
+            <div class="progress-bar" style="width: 16.66%"></div>
+        </div>
+
+        <!-- Slide 3: Expression Syntax -->
+        <div class="slide">
+            <h2>Die N8N Expression-Syntax 📝</h2>
+            <p style="text-align: center; font-size: 1.3rem; margin-bottom: 30px;">
+                N8N nutzt eine <span class="highlight">eigene Expression-Sprache</span> mit JavaScript-Support
+            </p>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <span class="feature-icon" style="color: #7842ff;">{{ }}</span>
+                    <h3>Einfache Expression</h3>
+                    <div class="code-snippet" style="margin-top: 10px;">
+{{<span class="code-function">$json</span>.<span class="code-keyword">email</span>}}
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon" style="color: #ff427b;">🔗</span>
+                    <h3>Text + Expression</h3>
+                    <div class="code-snippet" style="margin-top: 10px;">
+Email: {{<span class="code-function">$json</span>.<span class="code-keyword">email</span>}}
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon" style="color: #42ffbd;">🎯</span>
+                    <h3>Mehrere Expressions</h3>
+                    <div class="code-snippet" style="margin-top: 10px;">
+{{<span class="code-function">$json</span>.<span class="code-keyword">firstName</span>}} {{<span class="code-function">$json</span>.<span class="code-keyword">lastName</span>}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="expression-box" style="margin-top: 20px;">
+                <h3>💡 Gut zu wissen:</h3>
+                <p>N8N's Expression-Sprache kombiniert eine JMESPath-ähnliche Syntax für Datenzugriff mit vollständigem JavaScript-Support für Berechnungen und Transformationen!</p>
+            </div>
+            <div class="progress-bar" style="width: 25%"></div>
+        </div>
+
+        <!-- Slide 4: $json erklärt -->
+        <div class="slide">
+            <h2>Der magische $json 🎯</h2>
+            <p><code style="color: #42ffbd;">$json</code> ist dein wichtigster Helfer - er enthält die Daten vom vorherigen Node!</p>
+            
+            <div class="demo-container">
+                <h3 style="color: #7842ff; margin-bottom: 15px;">📥 Input vom vorherigen Node:</h3>
+                <div class="code-snippet">
+{
+  "<span class="code-keyword">name</span>": "<span class="code-string">Lisa Müller</span>",
+  "<span class="code-keyword">email</span>": "<span class="code-string">lisa@example.com</span>",
+  "<span class="code-keyword">age</span>": <span class="code-number">28</span>,
+  "<span class="code-keyword">address</span>": {
+    "<span class="code-keyword">city</span>": "<span class="code-string">Berlin</span>",
+    "<span class="code-keyword">zip</span>": "<span class="code-string">10115</span>"
+  }
+}
+                </div>
+                
+                <h3 style="color: #42ffbd; margin-top: 20px; margin-bottom: 15px;">✨ So greifst du darauf zu:</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="code-snippet">
+                        {{<span class="code-function">$json</span>.<span class="code-keyword">name</span>}}
+                    </div>
+                    <div class="expression-result">Lisa Müller</div>
+                    
+                    <div class="code-snippet">
+                        {{<span class="code-function">$json</span>.<span class="code-keyword">address</span>.<span class="code-keyword">city</span>}}
+                    </div>
+                    <div class="expression-result">Berlin</div>
+                </div>
+            </div>
+            <div class="progress-bar" style="width: 33.33%"></div>
+        </div>
+
+        <!-- Slide 5: Weitere $-Variablen -->
+        <div class="slide">
+            <h2>Die $-Familie 👨‍👩‍👧‍👦</h2>
+            <p>Neben <code>$json</code> gibt es noch weitere hilfreiche $-Variablen:</p>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <span class="feature-icon" style="color: #00b4d8;">📅</span>
+                    <h3>$now & $today</h3>
+                    <div class="code-snippet">
+                        {{<span class="code-function">$now</span>}}<br>
+                        {{<span class="code-function">$today</span>}}
+                    </div>
+                    <p style="font-size: 0.9rem; margin-top: 10px;">Aktuelles Datum/Zeit</p>
+                </div>
+                
+                <div class="feature-card">
+                    <span class="feature-icon" style="color: #ff6b6b;">🔢</span>
+                    <h3>$itemIndex</h3>
+                    <div class="code-snippet">
+                        {{<span class="code-function">$itemIndex</span>}}
+                    </div>
+                    <p style="font-size: 0.9rem; margin-top: 10px;">Position im Array (0, 1, 2...)</p>
+                </div>
+                
+                <div class="feature-card">
+                    <span class="feature-icon" style="color: #42ffbd;">🌍</span>
+                    <h3>$env</h3>
+                    <div class="code-snippet">
+                        {{<span class="code-function">$env</span>.<span class="code-keyword">API_KEY</span>}}
+                    </div>
+                    <p style="font-size: 0.9rem; margin-top: 10px;">Umgebungsvariablen</p>
+                </div>
+                
+                <div class="feature-card">
+                    <span class="feature-icon" style="color: #7842ff;">🎯</span>
+                    <h3>$node</h3>
+                    <div class="code-snippet">
+                        {{<span class="code-function">$node</span>["<span class="code-string">HTTP Request</span>"].<span class="code-keyword">json</span>}}
+                    </div>
+                    <p style="font-size: 0.9rem; margin-top: 10px;">Daten von jedem Node</p>
+                </div>
+            </div>
+            <div class="progress-bar" style="width: 41.66%"></div>
+        </div>
+
+        <!-- Slide 6: String-Operationen -->
+        <div class="slide">
+            <h2>Text manipulieren 📝</h2>
+            <p>Mit Expressions kannst du Texte auf vielfältige Weise bearbeiten:</p>
+            
+            <div class="expression-box">
+                <h3>Häufige String-Operationen:</h3>
+                <div class="code-snippet">
+<span class="code-comment">// Groß-/Kleinschreibung</span>
+{{<span class="code-function">$json</span>.<span class="code-keyword">name</span>.<span class="code-function">toUpperCase</span>()}}     <span class="code-comment">// LISA MÜLLER</span>
+{{<span class="code-function">$json</span>.<span class="code-keyword">name</span>.<span class="code-function">toLowerCase</span>()}}     <span class="code-comment">// lisa müller</span>
+
+<span class="code-comment">// Text ersetzen</span>
+{{<span class="code-function">$json</span>.<span class="code-keyword">email</span>.<span class="code-function">replace</span>('<span class="code-string">@</span>', '<span class="code-string"> [at] </span>')}}
+
+<span class="code-comment">// Text aufteilen</span>
+{{<span class="code-function">$json</span>.<span class="code-keyword">fullName</span>.<span class="code-function">split</span>('<span class="code-string"> </span>')[<span class="code-number">0</span>]}}  <span class="code-comment">// Vorname</span>
+
+<span class="code-comment">// Text kürzen</span>
+{{<span class="code-function">$json</span>.<span class="code-keyword">description</span>.<span class="code-function">substring</span>(<span class="code-number">0</span>, <span class="code-number">100</span>)}}...
+
+<span class="code-comment">// Leerzeichen entfernen</span>
+{{<span class="code-function">$json</span>.<span class="code-keyword">input</span>.<span class="code-function">trim</span>()}}
+
+<span class="code-comment">// Text verbinden</span>
+{{<span class="code-function">$json</span>.<span class="code-keyword">firstName</span> + '<span class="code-string"> </span>' + <span class="code-function">$json</span>.<span class="code-keyword">lastName</span>}}
+
+<span class="code-comment">// Text Länge prüfen</span>
+{{<span class="code-function">$json</span>.<span class="code-keyword">text</span>.<span class="code-function">length</span>}}
+
+<span class="code-comment">// Enthält Prüfung</span>
+{{<span class="code-function">$json</span>.<span class="code-keyword">email</span>.<span class="code-function">includes</span>('<span class="code-string">@gmail.com</span>')}}
+                </div>
+            </div>
+
+            <p style="text-align: center; margin-top: 20px; color: #7842ff;">
+                💡 Tipp: Du kannst alle JavaScript String-Methoden verwenden!
+            </p>
+            <div class="progress-bar" style="width: 50%"></div>
+        </div>
+
+        <!-- Slide 7: Berechnungen -->
+        <div class="slide">
+            <h2>Rechnen mit Expressions 🧮</h2>
+            <p>Führe Berechnungen direkt in deinem Workflow durch:</p>
+            
+            <div class="feature-grid" style="grid-template-columns: repeat(2, 1fr);">
+                <div class="feature-card">
+                    <h3 style="color: #00b4d8;">Grundrechenarten</h3>
+                    <div class="code-snippet">
+{{<span class="code-function">$json</span>.<span class="code-keyword">price</span> * <span class="code-number">1.19</span>}}         <span class="code-comment">// Mit MwSt</span>
+{{<span class="code-function">$json</span>.<span class="code-keyword">total</span> - <span class="code-function">$json</span>.<span class="code-keyword">discount</span>}}
+{{<span class="code-function">$json</span>.<span class="code-keyword">quantity</span> * <span class="code-function">$json</span>.<span class="code-keyword">price</span>}}
+{{<span class="code-function">$json</span>.<span class="code-keyword">sum</span> / <span class="code-function">$json</span>.<span class="code-keyword">count</span>}}
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <h3 style="color: #ff427b;">Math-Funktionen</h3>
+                    <div class="code-snippet">
+{{<span class="code-function">Math</span>.<span class="code-function">round</span>(<span class="code-function">$json</span>.<span class="code-keyword">value</span>)}}      <span class="code-comment">// Runden</span>
+{{<span class="code-function">Math</span>.<span class="code-function">floor</span>(<span class="code-function">$json</span>.<span class="code-keyword">price</span>)}}     <span class="code-comment">// Abrunden</span>
+{{<span class="code-function">Math</span>.<span class="code-function">ceil</span>(<span class="code-function">$json</span>.<span class="code-keyword">price</span>)}}      <span class="code-comment">// Aufrunden</span>
+{{<span class="code-function">Math</span>.<span class="code-function">abs</span>(<span class="code-function">$json</span>.<span class="code-keyword">number</span>)}}      <span class="code-comment">// Betrag</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="expression-box" style="margin-top: 20px;">
+                <h3>🎯 Praktisches Beispiel: Preisberechnung</h3>
+                <div class="code-snippet">
+<span class="code-comment">// Einfache Berechnung mit MwSt</span>
+{{(<span class="code-function">$json</span>.<span class="code-keyword">basePrice</span> * <span class="code-function">$json</span>.<span class="code-keyword">quantity</span> - <span class="code-function">$json</span>.<span class="code-keyword">discount</span>) * <span class="code-number">1.19</span>}}
+
+<span class="code-comment">// Mit Rundung auf 2 Nachkommastellen</span>
+{{<span class="code-function">Math</span>.<span class="code-function">round</span>(((<span class="code-function">$json</span>.<span class="code-keyword">basePrice</span> * <span class="code-function">$json</span>.<span class="code-keyword">quantity</span> - <span class="code-function">$json</span>.<span class="code-keyword">discount</span>) * <span class="code-number">1.19</span>) * <span class="code-number">100</span>) / <span class="code-number">100</span>}}
+
+<span class="code-comment">// Oder mit toFixed für Währung</span>
+{{((<span class="code-function">$json</span>.<span class="code-keyword">basePrice</span> * <span class="code-function">$json</span>.<span class="code-keyword">quantity</span> - <span class="code-function">$json</span>.<span class="code-keyword">discount</span>) * <span class="code-number">1.19</span>).<span class="code-function">toFixed</span>(<span class="code-number">2</span>)}}
+                </div>
+                <p style="margin-top: 10px;">Berechnet: (Grundpreis × Menge - Rabatt) × MwSt</p>
+            </div>
+            <div class="progress-bar" style="width: 58.33%"></div>
+        </div>
+
+        <!-- Slide 8: Bedingungen -->
+        <div class="slide">
+            <h2>If-Else in Expressions 🔀</h2>
+            <p>Nutze den <span class="highlight">Ternary Operator</span> für Bedingungen:</p>
+            
+            <div class="expression-box">
+                <h3>Syntax: Bedingung ? Wahr : Falsch</h3>
+                <div class="code-snippet" style="font-size: 1.1rem;">
+{{<span class="code-function">$json</span>.<span class="code-keyword">age</span> >= <span class="code-number">18</span> ? '<span class="code-string">Volljährig</span>' : '<span class="code-string">Minderjährig</span>'}}
+                </div>
+            </div>
+
+            <div class="demo-container">
+                <h3 style="color: #7842ff;">Praktische Beispiele:</h3>
+                <div class="code-snippet">
+<span class="code-comment">// Status-Prüfung</span>
+{{<span class="code-function">$json</span>.<span class="code-keyword">status</span> === '<span class="code-string">active</span>' ? '✅ Aktiv' : '❌ Inaktiv'}}
+
+<span class="code-comment">// Preiskategorie</span>
+{{<span class="code-function">$json</span>.<span class="code-keyword">price</span> > <span class="code-number">100</span> ? '<span class="code-string">Premium</span>' : '<span class="code-string">Standard</span>'}}
+
+<span class="code-comment">// Begrüßung nach Tageszeit</span>
+{{new <span class="code-function">Date</span>().<span class="code-function">getHours</span>() < <span class="code-number">12</span> ? '<span class="code-string">Guten Morgen</span>' : '<span class="code-string">Guten Tag</span>'}}
+
+<span class="code-comment">// Verschachtelte Bedingungen</span>
+{{<span class="code-function">$json</span>.<span class="code-keyword">score</span> >= <span class="code-number">90</span> ? '<span class="code-string">A</span>' : <span class="code-function">$json</span>.<span class="code-keyword">score</span> >= <span class="code-number">80</span> ? '<span class="code-string">B</span>' : '<span class="code-string">C</span>'}}
+
+<span class="code-comment">// Mit Default-Wert bei fehlendem Feld</span>
+{{<span class="code-function">$json</span>.<span class="code-keyword">name</span> ? <span class="code-function">$json</span>.<span class="code-keyword">name</span> : '<span class="code-string">Unbekannt</span>'}}
+
+<span class="code-comment">// Oder kürzer mit Nullish Coalescing</span>
+{{<span class="code-function">$json</span>.<span class="code-keyword">name</span> ?? '<span class="code-string">Unbekannt</span>'}}
+                </div>
+            </div>
+            <div class="progress-bar" style="width: 66.66%"></div>
+        </div>
+
+        <!-- Slide 9: Datum und Zeit -->
+        <div class="slide">
+            <h2>Zeit & Datum meistern ⏰</h2>
+            <p>N8N macht die Arbeit mit Datum und Zeit super einfach:</p>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3 style="color: #00b4d8;">Aktuelles Datum</h3>
+                    <div class="code-snippet">
+{{<span class="code-function">$now</span>}}
+{{<span class="code-function">$today</span>}}
+{{new <span class="code-function">Date</span>()}}
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <h3 style="color: #ff427b;">Formatierung</h3>
+                    <div class="code-snippet">
+{{<span class="code-function">$now</span>.<span class="code-function">format</span>('<span class="code-string">DD.MM.YYYY</span>')}}
+{{<span class="code-function">$now</span>.<span class="code-function">format</span>('<span class="code-string">HH:mm</span>')}}
+{{<span class="code-function">$today</span>.<span class="code-function">format</span>('<span class="code-string">dddd</span>')}}
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <h3 style="color: #42ffbd;">Berechnungen</h3>
+                    <div class="code-snippet">
+{{<span class="code-function">$now</span>.<span class="code-function">plus</span>(<span class="code-number">7</span>, '<span class="code-string">days</span>')}}
+{{<span class="code-function">$now</span>.<span class="code-function">minus</span>(<span class="code-number">1</span>, '<span class="code-string">month</span>')}}
+{{<span class="code-function">$now</span>.<span class="code-function">startOf</span>('<span class="code-string">week</span>')}}
+{{<span class="code-function">$now</span>.<span class="code-function">endOf</span>('<span class="code-string">month</span>')}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="expression-box" style="margin-top: 20px;">
+                <h3>📅 Format-Optionen:</h3>
+                <p><strong>DD</strong> = Tag (01-31) | <strong>MM</strong> = Monat (01-12) | <strong>YYYY</strong> = Jahr<br>
+                <strong>HH</strong> = Stunde (00-23) | <strong>mm</strong> = Minute | <strong>ss</strong> = Sekunde<br>
+                <strong>dddd</strong> = Wochentag | <strong>MMMM</strong> = Monatsname</p>
+            </div>
+            <div class="progress-bar" style="width: 75%"></div>
+        </div>
+
+        <!-- Slide 10: Arrays und Objekte -->
+        <div class="slide">
+            <h2>Arrays & Objekte 📦</h2>
+            <p>Arbeite mit Listen und komplexen Datenstrukturen:</p>
+            
+            <div class="demo-container">
+                <h3 style="color: #7842ff;">Array-Operationen:</h3>
+                <div class="code-snippet">
+<span class="code-comment">// Anzahl der Elemente</span>
+{{<span class="code-function">$json</span>.<span class="code-keyword">items</span>.<span class="code-function">length</span>}}
+
+<span class="code-comment">// Erstes/Letztes Element</span>
+{{<span class="code-function">$json</span>.<span class="code-keyword">items</span>[<span class="code-number">0</span>]}}
+{{<span class="code-function">$json</span>.<span class="code-keyword">items</span>[<span class="code-function">$json</span>.<span class="code-keyword">items</span>.<span class="code-function">length</span> - <span class="code-number">1</span>]}}
+
+<span class="code-comment">// Array zu String</span>
+{{<span class="code-function">$json</span>.<span class="code-keyword">tags</span>.<span class="code-function">join</span>('<span class="code-string">, </span>')}}
+
+<span class="code-comment">// Prüfen ob Element enthalten</span>
+{{<span class="code-function">$json</span>.<span class="code-keyword">tags</span>.<span class="code-function">includes</span>('<span class="code-string">wichtig</span>')}}
+
+<span class="code-comment">// Map - Alle Preise mit MwSt</span>
+{{<span class="code-function">$json</span>.<span class="code-keyword">products</span>.<span class="code-function">map</span>(p => p.<span class="code-keyword">price</span> * <span class="code-number">1.19</span>)}}
+
+<span class="code-comment">// Filter - Nur Preise über 50</span>
+{{<span class="code-function">$json</span>.<span class="code-keyword">products</span>.<span class="code-function">filter</span>(p => p.<span class="code-keyword">price</span> > <span class="code-number">50</span>)}}
+
+<span class="code-comment">// Summe berechnen</span>
+{{<span class="code-function">$json</span>.<span class="code-keyword">prices</span>.<span class="code-function">reduce</span>((sum, price) => sum + price, <span class="code-number">0</span>)}}
+
+<span class="code-comment">// Find - Erstes Element mit Bedingung</span>
+{{<span class="code-function">$json</span>.<span class="code-keyword">users</span>.<span class="code-function">find</span>(u => u.<span class="code-keyword">email</span> === '<span class="code-string">admin@example.com</span>')}}
+
+<span class="code-comment">// Some - Prüft ob mindestens ein Element die Bedingung erfüllt</span>
+{{<span class="code-function">$json</span>.<span class="code-keyword">orders</span>.<span class="code-function">some</span>(o => o.<span class="code-keyword">status</span> === '<span class="code-string">pending</span>')}}
+                </div>
+            </div>
+
+            <p style="text-align: center; margin-top: 20px; color: #42ffbd;">
+                💡 Pro-Tipp: Nutze <code>.map()</code>, <code>.filter()</code> und <code>.reduce()</code> für komplexe Transformationen!
+            </p>
+            <div class="progress-bar" style="width: 83.33%"></div>
+        </div>
+
+        <!-- Slide 11: Node-übergreifende Expressions -->
+        <div class="slide">
+            <h2>Zwischen Nodes springen 🏃‍♂️</h2>
+            <p>Greife auf Daten von <span class="highlight">jedem beliebigen Node</span> in deinem Workflow zu:</p>
+            
+            <div class="expression-box">
+                <h3>Die $node Syntax:</h3>
+                <div class="code-snippet" style="font-size: 1rem;">
+{{<span class="code-function">$node</span>["<span class="code-string">Node Name</span>"].<span class="code-keyword">json</span>.<span class="code-keyword">fieldName</span>}}
+                </div>
+            </div>
+
+            <div class="demo-container">
+                <h3 style="color: #7842ff;">Praktische Beispiele:</h3>
+                <div class="code-snippet">
+<span class="code-comment">// Daten vom "HTTP Request" Node</span>
+{{<span class="code-function">$node</span>["<span class="code-string">HTTP Request</span>"].<span class="code-keyword">json</span>.<span class="code-keyword">status</span>}}
+
+<span class="code-comment">// Alle Items von einem Node</span>
+{{<span class="code-function">$node</span>["<span class="code-string">Google Sheets</span>"].<span class="code-keyword">all</span>()}}
+
+<span class="code-comment">// Erstes Item eines Nodes</span>
+{{<span class="code-function">$node</span>["<span class="code-string">Database</span>"].<span class="code-keyword">first</span>().<span class="code-keyword">json</span>.<span class="code-keyword">id</span>}}
+
+<span class="code-comment">// Letztes Item</span>
+{{<span class="code-function">$node</span>["<span class="code-string">API Call</span>"].<span class="code-keyword">last</span>().<span class="code-keyword">json</span>}}
+
+<span class="code-comment">// Bestimmtes Item (z.B. das dritte)</span>
+{{<span class="code-function">$node</span>["<span class="code-string">Split In Batches</span>"].<span class="code-keyword">item</span>(<span class="code-number">2</span>).<span class="code-keyword">json</span>}}
+
+<span class="code-comment">// Zugriff mit Variable als Node-Name</span>
+{{<span class="code-function">$node</span>[<span class="code-function">$json</span>.<span class="code-keyword">sourceNode</span>].<span class="code-keyword">json</span>}}
+
+<span class="code-comment">// Prüfen ob Node Daten hat</span>
+{{<span class="code-function">$node</span>["<span class="code-string">Filter</span>"].<span class="code-keyword">all</span>().<span class="code-function">length</span> > <span class="code-number">0</span>}}
+                </div>
+            </div>
+
+            <p style="background: rgba(255, 66, 123, 0.1); padding: 20px; border-radius: 15px; border: 1px solid rgba(255, 66, 123, 0.3); margin-top: 20px;">
+                ⚠️ <strong>Wichtig:</strong> Der Node-Name muss exakt übereinstimmen (inkl. Leerzeichen)!
+            </p>
+            <div class="progress-bar" style="width: 91.66%"></div>
+        </div>
+
+        <!-- Slide 12: Best Practices & Tipps -->
+        <div class="slide">
+            <h2>Expression Pro-Tipps 🎓</h2>
+            
+            <div style="display: grid; gap: 15px;">
+                <div style="background: rgba(255, 255, 255, 0.03); padding: 20px; border-radius: 15px; border-left: 4px solid #00b4d8;">
+                    <h3 style="color: #00b4d8; margin-bottom: 8px; font-size: 1.2rem;">🛡️ Fehler vermeiden</h3>
+                    <p style="font-size: 0.95rem;">Nutze den Optional Chaining Operator <code>?.</code> für sichere Zugriffe:<br>
+                    <code style="color: #42ffbd;">{{$json.user?.email}}</code></p>
+                </div>
+                
+                <div style="background: rgba(255, 255, 255, 0.03); padding: 20px; border-radius: 15px; border-left: 4px solid #ff427b;">
+                    <h3 style="color: #ff427b; margin-bottom: 8px; font-size: 1.2rem;">💡 Expression Editor</h3>
+                    <p style="font-size: 0.95rem;">Nutze <strong>Strg/Cmd + Space</strong> für Autocomplete und Vorschläge!</p>
+                </div>
+                
+                <div style="background: rgba(255, 255, 255, 0.03); padding: 20px; border-radius: 15px; border-left: 4px solid #42ffbd;">
+                    <h3 style="color: #42ffbd; margin-bottom: 8px; font-size: 1.2rem;">🐛 Debugging</h3>
+                    <p style="font-size: 0.95rem;">Teste Expressions mit dem "Execute Node" Button und prüfe die Ausgabe</p>
+                </div>
+                
+                <div style="background: rgba(255, 255, 255, 0.03); padding: 20px; border-radius: 15px; border-left: 4px solid #7842ff;">
+                    <h3 style="color: #7842ff; margin-bottom: 8px; font-size: 1.2rem;">📚 N8N Expression Language</h3>
+                    <p style="font-size: 0.95rem;">N8N nutzt eine eigene Expression-Sprache, die JMESPath-ähnliche Syntax mit vollständigem JavaScript kombiniert!</p>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <h3 style="font-size: 1.6rem; margin-bottom: 20px;">Jetzt bist du Expression-Experte! 🚀</h3>
+                <p style="font-size: 1.2rem;">
+                    <span class="emoji-bounce">✨</span> Mach deine Workflows intelligent und dynamisch! <span class="emoji-bounce">✨</span>
+                </p>
+            </div>
+            <div class="progress-bar" style="width: 100%"></div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button id="prev-btn" onclick="changeSlide(-1)">
+            <span>← Zurück</span>
+        </button>
+        <button id="next-btn" onclick="changeSlide(1)">
+            <span>Weiter →</span>
+        </button>
+    </div>
+
+    <div class="keyboard-hint">
+        Tipp: Nutze ← → oder Leertaste
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 12;
+
+        // Hide loading animation when page loads
+        window.addEventListener('load', function() {
+            document.getElementById('loading').style.display = 'none';
+        });
+
+        function showSlide(n) {
+            const slides = document.getElementsByClassName("slide");
+            
+            if (n > totalSlides) currentSlide = 1;
+            if (n < 1) currentSlide = totalSlides;
+            
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].classList.remove("active");
+            }
+            
+            slides[currentSlide - 1].classList.add("active");
+            
+            document.getElementById("current-slide").textContent = currentSlide;
+            
+            // Update button states
+            document.getElementById("prev-btn").disabled = currentSlide === 1;
+            document.getElementById("next-btn").disabled = currentSlide === totalSlides;
+            
+            // Update progress bar
+            const progressBars = document.querySelectorAll('.progress-bar');
+            progressBars.forEach((bar, index) => {
+                if (index === currentSlide - 1) {
+                    bar.style.opacity = '1';
+                } else {
+                    bar.style.opacity = '0';
+                }
+            });
+
+            // Update URL hash
+            window.location.hash = `slide-${currentSlide}`;
+        }
+
+        function changeSlide(n) {
+            currentSlide += n;
+            showSlide(currentSlide);
+        }
+
+        // Keyboard navigation
+        document.addEventListener("keydown", function(event) {
+            if (event.key === "ArrowLeft") changeSlide(-1);
+            if (event.key === "ArrowRight") changeSlide(1);
+            if (event.key === " ") {
+                event.preventDefault();
+                changeSlide(1);
+            }
+            if (event.key === "Home") {
+                currentSlide = 1;
+                showSlide(currentSlide);
+            }
+            if (event.key === "End") {
+                currentSlide = totalSlides;
+                showSlide(currentSlide);
+            }
+        });
+
+        // Touch navigation for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', function(event) {
+            touchStartX = event.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', function(event) {
+            touchEndX = event.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) changeSlide(1);
+            if (touchEndX > touchStartX + 50) changeSlide(-1);
+        }
+
+        // Check URL hash on load
+        window.addEventListener('load', function() {
+            const hash = window.location.hash;
+            if (hash) {
+                const slideNumber = parseInt(hash.replace('#slide-', ''));
+                if (!isNaN(slideNumber) && slideNumber >= 1 && slideNumber <= totalSlides) {
+                    currentSlide = slideNumber;
+                }
+            }
+            showSlide(currentSlide);
+        });
+
+        // Initialize
+        document.getElementById("total-slides").textContent = totalSlides;
+        showSlide(currentSlide);
+
+        // Add fullscreen support
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'f' || event.key === 'F') {
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen();
+                } else {
+                    document.exitFullscreen();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
